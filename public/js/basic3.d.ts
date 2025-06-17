@@ -1,0 +1,10 @@
+export declare function demonstrateConditionalTypes(): void;
+export declare function demonstrateTemplateLiteralTypes(): void;
+export declare function demonstrateAdvancedMappedTypes(): void;
+export declare function demonstrateDiscriminatedUnions(): void;
+export declare function demonstrateTypeGuards(): void;
+export declare function demonstrateDecorators(): void;
+export declare function demonstrateModulesAndNamespaces(): void;
+export declare function demonstrateAsyncTypes(): Promise<void>;
+export declare function demonstrateDesignPatterns(): void;
+export declare function demonstrateTypeChallenges(): void;

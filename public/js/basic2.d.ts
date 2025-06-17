@@ -1,0 +1,10 @@
+export declare function demonstrateInterface(): void;
+export declare function demonstrateInterfaceWithMethods(): void;
+export declare function demonstrateClass(): void;
+export declare function demonstrateInheritance(): void;
+export declare function demonstrateInterfaceAndClass(): void;
+export declare function demonstrateGenerics(): void;
+export declare function demonstrateGenericClass(): void;
+export declare function demonstrateGenericConstraints(): void;
+export declare function demonstrateUtilityTypes(): void;
+export declare function demonstrateMappedTypes(): void;

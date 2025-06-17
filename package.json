@@ -1,0 +1,26 @@
+{
+  "name": "20250614_typescript-practice",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "dev": "tsc --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naonaonaomi/20250608-js-practice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/naonaonaomi/20250608-js-practice/issues"
+  },
+  "homepage": "https://github.com/naonaonaomi/20250608-js-practice#readme",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}
