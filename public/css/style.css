@@ -134,21 +134,325 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
   font-size: 1.13em;
   box-shadow: 0 2px 8px rgba(49,120,198,0.06);
 }
-@media (max-width: 700px) {
+@media (min-width: 768px) {
+  .main-nav {
+    display: flex;
+    gap: 1.5em;
+    justify-content: center;
+    margin-top: 1.5em;
+    flex-wrap: wrap;
+  }
+  
+  .main-nav button {
+    flex: 1;
+    min-width: 180px;
+    max-width: 250px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
   main {
-    padding: 0.7em;
+    max-width: 85%;
+    padding: 2em 1em;
   }
+  
   section {
-    padding: 1.2em 0.7em;
+    padding: 2em 1.5em;
   }
-  h1 {
+  
+  .header-inner {
+    padding: 1.3em 1.5em;
+  }
+  
+  .header-title {
+    font-size: 2em;
+  }
+  
+  pre {
+    font-size: 1em;
+    padding: 1em 1.2em;
+  }
+}
+@media (max-width: 767px) {
+  main {
+    max-width: 100%;
+    padding: 1em 0.8em;
+    margin: 0;
+  }
+  
+  section {
+    padding: 1.5em 1em;
+    margin-bottom: 2em;
+    border-radius: 20px;
+  }
+  
+  .header-inner {
+    padding: 1.2em 1em;
+  }
+  
+  .header-title {
+    font-size: 1.8em;
+  }
+  
+  h2 {
+    font-size: 1.4em;
+    padding-left: 0.8em;
+    border-left: 6px solid #79B8FF;
+  }
+  
+  pre {
+    font-size: 0.95em;
+    padding: 1em;
+    border-radius: 8px;
+    overflow-x: auto;
+    word-wrap: break-word;
+  }
+  
+  .main-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-top: 1.2em;
+  }
+  
+  .main-nav button {
+    width: 100%;
+    padding: 1em 1.5em;
+    font-size: 1.1em;
+    margin: 0;
+  }
+  
+  .intro-card {
+    padding: 2em 1.2em;
+    margin-bottom: 2em;
+  }
+  
+  .intro-card h2 {
     font-size: 1.5em;
   }
-  h2 {
-    font-size: 1.15em;
+  
+  .intro-card p {
+    font-size: 1em;
+    line-height: 1.6;
   }
+  
+  button {
+    padding: 1em 1.8em;
+    font-size: 1.1em;
+    margin: 0.8em 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .result {
+    font-size: 1em;
+    padding: 1em;
+    margin-top: 1em;
+  }
+}
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+  
+  header.global-header {
+    margin-bottom: 1.5em;
+    border-radius: 0 0 25px 25px;
+  }
+  
+  .header-inner {
+    padding: 1em 0.8em;
+  }
+  
+  .header-title {
+    font-size: 1.6em;
+    letter-spacing: 0.05em;
+  }
+  
+  main {
+    padding: 0.8em 0.6em;
+  }
+  
+  section {
+    padding: 1.2em 0.8em;
+    margin-bottom: 1.5em;
+    border-radius: 18px;
+  }
+  
+  h2 {
+    font-size: 1.25em;
+    padding-left: 0.6em;
+    border-left: 5px solid #79B8FF;
+    border-radius: 6px;
+    margin-bottom: 1em;
+  }
+  
+  p {
+    font-size: 0.95em;
+    line-height: 1.6;
+    margin-bottom: 1em;
+  }
+  
+  pre {
+    font-size: 0.85em;
+    padding: 0.8em;
+    border-radius: 6px;
+    overflow-x: auto;
+    white-space: pre;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  pre code {
+    font-size: 0.85em;
+    line-height: 1.4;
+  }
+  
+  button {
+    padding: 0.9em 1.5em;
+    font-size: 1em;
+    border-radius: 10px;
+    margin: 0.6em 0;
+    width: 100%;
+  }
+  
+  .result {
+    font-size: 0.9em;
+    padding: 0.8em;
+    margin-top: 0.8em;
+    border-radius: 8px;
+  }
+  
+  .main-nav {
+    gap: 0.8em;
+    margin-top: 1em;
+  }
+  
+  .main-nav button {
+    padding: 1em;
+    font-size: 0.95em;
+    line-height: 1.3;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+  
   .intro-card {
-    padding: 1.5em 0.8em;
+    padding: 1.5em 1em;
+    margin-bottom: 1.5em;
+    border-radius: 18px;
+  }
+  
+  .intro-card h2 {
+    font-size: 1.3em;
+    margin-bottom: 0.8em;
+  }
+  
+  .intro-card p {
+    font-size: 0.9em;
+    line-height: 1.5;
+  }
+}
+@media (max-width: 320px) {
+  body {
+    font-size: 13px;
+  }
+  
+  .header-title {
+    font-size: 1.4em;
+  }
+  
+  main {
+    padding: 0.6em 0.4em;
+  }
+  
+  section {
+    padding: 1em 0.6em;
+    border-radius: 15px;
+  }
+  
+  h2 {
+    font-size: 1.1em;
+    padding-left: 0.5em;
+    border-left: 4px solid #79B8FF;
+  }
+  
+  pre {
+    font-size: 0.8em;
+    padding: 0.6em;
+  }
+  
+  button {
+    padding: 0.8em 1.2em;
+    font-size: 0.9em;
+  }
+  
+  .main-nav button {
+    padding: 0.9em;
+    font-size: 0.85em;
+  }
+  
+  .intro-card {
+    padding: 1.2em 0.8em;
+  }
+  
+  .intro-card h2 {
+    font-size: 1.2em;
+  }
+  
+  .intro-card p {
+    font-size: 0.85em;
+  }
+}
+@media (max-width: 768px) and (orientation: landscape) {
+  header.global-header {
+    margin-bottom: 1em;
+  }
+  
+  .header-inner {
+    padding: 0.8em 1em;
+  }
+  
+  .header-title {
+    font-size: 1.4em;
+  }
+  
+  main {
+    padding: 1em 0.8em;
+  }
+  
+  section {
+    padding: 1.2em 1em;
+    margin-bottom: 1.5em;
+  }
+  
+  .intro-card {
+    padding: 1.5em 1.2em;
+  }
+  
+  .main-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.8em;
+  }
+  
+  .main-nav button {
+    flex: 1;
+    min-width: calc(50% - 0.4em);
+    width: auto;
+  }
+}
+@media (max-width: 768px) {
+  button:focus {
+    outline: 3px solid #79B8FF;
+    outline-offset: 2px;
+  }
+  
+  a:focus {
+    outline: 3px solid #79B8FF;
+    outline-offset: 2px;
+  }
+  
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 header.main-header, header.global-header {
@@ -227,4 +531,223 @@ header.main-header, header.global-header {
   border-color: #3178C6;
   background: #e8f4fd;
   box-shadow: 0 4px 16px rgba(49,120,198,0.13);
+}
+
+/* コードブロックの改善 - 水平スクロール対応 */
+pre code {
+  white-space: pre;
+  overflow-x: auto;
+  display: block;
+  word-break: normal;
+  word-wrap: normal;
+}
+
+/* スクロールバーのスタイリング（Webkit系ブラウザ） */
+pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+pre::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+pre::-webkit-scrollbar-thumb {
+  background: #79B8FF;
+  border-radius: 4px;
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+  background: #3178C6;
+}
+
+/* ボタンのタッチ改善 */
+@media (hover: none) and (pointer: coarse) {
+  button:hover {
+    transform: none;
+    box-shadow: 0 4px 16px rgba(49,120,198,0.13);
+  }
+  
+  button:active {
+    transform: scale(0.98);
+    transition: transform 0.1s;
+  }
+}
+
+/* 画面読み上げツール対応 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* フォーカス可視性の向上 */
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #79B8FF;
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* ダークモード対応（ユーザーのシステム設定に基づく） */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: linear-gradient(120deg, #1a1a2e 60%, #16213e 100%);
+    color: #e8e8e8;
+  }
+  
+  section {
+    background: #2d2d44;
+    border: 1.5px solid #3d4b6b;
+  }
+  
+  h2 {
+    color: #9ec5ff;
+    background: linear-gradient(90deg, #2d4b6b 60%, #1a1a2e 100%);
+  }
+  
+  pre {
+    background: #1e1e2e;
+    color: #e8e8e8;
+    border-left: 5px solid #79B8FF;
+  }
+  
+  .result {
+    background: linear-gradient(90deg, #2d4b6b 60%, #1a1a2e 100%);
+    color: #9ec5ff;
+    border: 1.5px solid #4a6ea8;
+  }
+}
+
+/* レスポンシブテキストサイズ調整 */
+@media (max-width: 480px) {
+  /* より小さなフォントサイズ調整 */
+  h1 {
+    font-size: 1.8em;
+  }
+  
+  h2 {
+    font-size: 1.2em;
+    line-height: 1.3;
+  }
+  
+  p {
+    font-size: 0.9em;
+    line-height: 1.5;
+  }
+  
+  /* インタラクション要素の改善 */
+  button {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  
+  /* 段落間のスペース調整 */
+  section > *:not(:last-child) {
+    margin-bottom: 1em;
+  }
+  
+  /* 縦長画面での最適化 */
+  .intro-card p br {
+    display: none;
+  }
+}
+
+/* 極小画面での文字サイズとスペース最適化 */
+@media (max-width: 360px) {
+  body {
+    font-size: 12px;
+  }
+  
+  .header-title {
+    font-size: 1.3em;
+  }
+  
+  section {
+    margin-bottom: 1.2em;
+  }
+  
+  .main-nav {
+    gap: 0.6em;
+  }
+  
+  .main-nav button {
+    padding: 0.8em 0.6em;
+    font-size: 0.8em;
+  }
+}
+
+/* プリント対応 */
+@media print {
+  header.global-header {
+    background: #3178C6 !important;
+    color: white !important;
+    box-shadow: none;
+  }
+  
+  section {
+    page-break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    display: none;
+  }
+  
+  pre {
+    background: #f5f5f5 !important;
+    border: 1px solid #ccc;
+  }
+}
+
+/* ページナビゲーションスタイル */
+.page-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  margin: 2em 0;
+  flex-wrap: wrap;
+}
+
+.page-navigation button {
+  min-width: 120px;
+  margin: 0.5em;
+  font-weight: 600;
+}
+
+/* スマートフォン向けナビゲーション改善 */
+@media (max-width: 480px) {
+  .page-navigation {
+    flex-direction: column;
+    gap: 0.8em;
+    margin: 1.5em 0;
+  }
+  
+  .page-navigation button {
+    width: 100%;
+    min-width: auto;
+    margin: 0.3em 0;
+    padding: 1em;
+    font-size: 1em;
+  }
+}
+
+/* 極小画面向けナビゲーション */
+@media (max-width: 360px) {
+  .page-navigation {
+    margin: 1.2em 0;
+  }
+  
+  .page-navigation button {
+    padding: 0.9em;
+    font-size: 0.9em;
+  }
 } 
