@@ -1,7 +1,31 @@
-// TypeScript基礎編のサンプルコード
+/**
+ * TypeScript基礎編のサンプルコード
+ * 基本的な型、関数、オブジェクトの使用方法を学習
+ */
 
+// ===================================
+// 型定義セクション
+// ===================================
+
+// セクション5で使用する型エイリアス
+type Status = "pending" | "completed" | "failed";
+
+type BasicUserType = {
+    id: number;
+    name: string;
+    status: Status;
+};
+
+// ===================================
 // セクション1: 基本的な型
-export function demonstrateBasicTypes(): void {
+// ===================================
+
+/**
+ * 基本的なプリミティブ型の使用例を示す
+ */
+function demonstrateBasicTypes(): void {
+    console.log("=== 基本的な型のデモンストレーション ===");
+    
     // 数値型
     let age: number = 25;
     console.log("年齢:", age);
@@ -14,18 +38,26 @@ export function demonstrateBasicTypes(): void {
     let isStudent: boolean = true;
     console.log("学生か:", isStudent);
 
-    // 配列型
+    // 配列型（推奨記法）
     let colors: string[] = ["赤", "青", "緑"];
     console.log("色配列:", colors);
 
-    // 数値配列の別の書き方
+    // 数値配列（ジェネリック記法）
     let scores: Array<number> = [85, 90, 78];
     console.log("得点配列:", scores);
 }
 
+// ===================================
 // セクション2: オブジェクト型
-export function demonstrateObjectTypes(): void {
-    // オブジェクト型の定義
+// ===================================
+
+/**
+ * オブジェクト型とオプショナルプロパティの使用例を示す
+ */
+function demonstrateObjectTypes(): void {
+    console.log("=== オブジェクト型のデモンストレーション ===");
+    
+    // オブジェクト型の定義（インライン型）
     let person: { name: string; age: number; isActive: boolean } = {
         name: "佐藤花子",
         age: 30,
@@ -45,8 +77,16 @@ export function demonstrateObjectTypes(): void {
     console.log("email追加後:", user);
 }
 
+// ===================================
 // セクション3: 関数の型
-export function demonstrateFunctionTypes(): void {
+// ===================================
+
+/**
+ * 関数の型注釈とオプション引数の使用例を示す
+ */
+function demonstrateFunctionTypes(): void {
+    console.log("=== 関数の型のデモンストレーション ===");
+    
     // 関数の型注釈
     function add(x: number, y: number): number {
         return x + y;
@@ -65,11 +105,19 @@ export function demonstrateFunctionTypes(): void {
         return `こんにちは、${name}さん！`;
     }
     console.log(greet("田中"));
-    console.log(greet("佐藤", "さん"));
+    console.log(greet("佐藤", "先生"));
 }
 
+// ===================================
 // セクション4: Union型
-export function demonstrateUnionTypes(): void {
+// ===================================
+
+/**
+ * Union型（複数の型の組み合わせ）の使用例を示す
+ */
+function demonstrateUnionTypes(): void {
+    console.log("=== Union型のデモンストレーション ===");
+    
     // Union型（複数の型のいずれか）
     let id: number | string;
 
@@ -91,17 +139,18 @@ export function demonstrateUnionTypes(): void {
     console.log(formatId("abc123"));
 }
 
+// ===================================
 // セクション5: 型エイリアス
-type Status = "pending" | "completed" | "failed";
-type User = {
-    id: number;
-    name: string;
-    status: Status;
-};
+// ===================================
 
-export function demonstrateTypeAliases(): void {
+/**
+ * 型エイリアスを使った型の再利用例を示す
+ */
+function demonstrateTypeAliases(): void {
+    console.log("=== 型エイリアスのデモンストレーション ===");
+    
     // 型エイリアスの使用
-    let currentUser: User = {
+    let currentUser: BasicUserType = {
         id: 1,
         name: "鈴木一郎",
         status: "pending"
@@ -109,7 +158,7 @@ export function demonstrateTypeAliases(): void {
     console.log("ユーザー:", currentUser);
 
     // 型安全な関数
-    function updateStatus(user: User, newStatus: Status): User {
+    function updateStatus(user: BasicUserType, newStatus: Status): BasicUserType {
         return { ...user, status: newStatus };
     }
 
@@ -117,8 +166,16 @@ export function demonstrateTypeAliases(): void {
     console.log("更新後:", updatedUser);
 }
 
+// ===================================
 // セクション6: 配列とタプル
-export function demonstrateArraysAndTuples(): void {
+// ===================================
+
+/**
+ * 配列型とタプル型の使用例を示す
+ */
+function demonstrateArraysAndTuples(): void {
+    console.log("=== 配列とタプルのデモンストレーション ===");
+    
     // 配列型
     let numbers: number[] = [1, 2, 3, 4, 5];
     console.log("数値配列:", numbers);
@@ -139,8 +196,16 @@ export function demonstrateArraysAndTuples(): void {
     console.log("果物配列:", fruits);
 }
 
-// セクション7: never, any, unknown型
-export function demonstrateSpecialTypes(): void {
+// ===================================
+// セクション7: 特殊な型（never, any, unknown）
+// ===================================
+
+/**
+ * TypeScriptの特殊な型（never, any, unknown）の使用例を示す
+ */
+function demonstrateSpecialTypes(): void {
+    console.log("=== 特殊な型のデモンストレーション ===");
+    
     // any型（型チェックを無効にする）
     let anyValue: any = 42;
     anyValue = "文字列";
@@ -175,8 +240,16 @@ export function demonstrateSpecialTypes(): void {
     console.log("処理結果:", processValue("hello"));
 }
 
-// セクション8: 型注釈vs型推論
-export function demonstrateTypeAnnotationVsInference(): void {
+// ===================================
+// セクション8: 型注釈 vs 型推論
+// ===================================
+
+/**
+ * 型注釈と型推論の違いと使い分けを示す
+ */
+function demonstrateTypeAnnotationVsInference(): void {
+    console.log("=== 型注釈と型推論のデモンストレーション ===");
+    
     // 型推論（TypeScriptが自動で型を決定）
     let inferredString = "これは文字列";  // string型として推論
     let inferredNumber = 42;             // number型として推論
@@ -207,103 +280,99 @@ export function demonstrateTypeAnnotationVsInference(): void {
     console.log("推論されたオブジェクト:", user);
 }
 
-// DOMイベントリスナーの設定
+// ===================================
+// DOM操作・イベント処理セクション
+// ===================================
+
+/**
+ * 結果をHTMLページに表示するヘルパー関数
+ */
+function displayResult1(resultId: string, content: string): void {
+    const resultDiv = document.getElementById(resultId);
+    if (resultDiv) {
+        resultDiv.innerHTML = `<div>${content}</div>`;
+        resultDiv.style.padding = '10px';
+        resultDiv.style.marginTop = '10px';
+        resultDiv.style.whiteSpace = 'pre-wrap';
+        resultDiv.style.fontFamily = 'monospace';
+    }
+}
+
+/**
+ * コンソールログをキャプチャして文字列として返すヘルパー関数
+ */
+function captureConsoleOutput1(fn: () => void): string {
+    const originalLog = console.log;
+    let output = '';
+    
+    console.log = (...args: any[]) => {
+        output += args.join(' ') + '\n';
+        originalLog.apply(console, args);
+    };
+    
+    try {
+        fn();
+    } finally {
+        console.log = originalLog;
+    }
+    
+    return output;
+}
+
+/**
+ * DOMが読み込まれた後にイベントリスナーを設定
+ */
 document.addEventListener('DOMContentLoaded', () => {
-    // ボタンのクリックイベントを設定
-    const btn1 = document.getElementById('btn1');
-    const btn2 = document.getElementById('btn2');
-    const btn3 = document.getElementById('btn3');
-    const btn4 = document.getElementById('btn4');
-    const btn5 = document.getElementById('btn5');
-    const btn6 = document.getElementById('btn6');
-    const btn7 = document.getElementById('btn7');
-    const btn8 = document.getElementById('btn8');
+    // ボタン要素の取得
+    const buttons = {
+        btn1: document.getElementById('btn1'),
+        btn2: document.getElementById('btn2'),
+        btn3: document.getElementById('btn3'),
+        btn4: document.getElementById('btn4'),
+        btn5: document.getElementById('btn5'),
+        btn6: document.getElementById('btn6'),
+        btn7: document.getElementById('btn7'),
+        btn8: document.getElementById('btn8')
+    };
 
-    // 結果表示用のヘルパー関数
-    function displayResult(resultId: string, content: string): void {
-        const resultDiv = document.getElementById(resultId);
-        if (resultDiv) {
-            resultDiv.innerHTML = `<pre>${content}</pre>`;
-            resultDiv.style.background = '#f5f5f5';
-            resultDiv.style.padding = '10px';
-            resultDiv.style.marginTop = '10px';
-            resultDiv.style.borderRadius = '4px';
-        }
-    }
+    // 各ボタンのイベントリスナー設定
+    buttons.btn1?.addEventListener('click', () => {
+        const output = captureConsoleOutput1(() => demonstrateBasicTypes());
+        displayResult1('result1', output);
+    });
 
-    // コンソールログをキャプチャするヘルパー関数
-    function captureConsoleOutput(fn: () => void): string {
-        const originalLog = console.log;
-        let output = '';
-        
-        console.log = (...args: any[]) => {
-            output += args.join(' ') + '\n';
-            originalLog.apply(console, args);
-        };
-        
-        try {
-            fn();
-        } finally {
-            console.log = originalLog;
-        }
-        
-        return output;
-    }
+    buttons.btn2?.addEventListener('click', () => {
+        const output = captureConsoleOutput1(() => demonstrateObjectTypes());
+        displayResult1('result2', output);
+    });
 
-    // 各ボタンのイベントリスナー
-    if (btn1) {
-        btn1.addEventListener('click', () => {
-            const output = captureConsoleOutput(() => demonstrateBasicTypes());
-            displayResult('result1', output);
-        });
-    }
+    buttons.btn3?.addEventListener('click', () => {
+        const output = captureConsoleOutput1(() => demonstrateFunctionTypes());
+        displayResult1('result3', output);
+    });
 
-    if (btn2) {
-        btn2.addEventListener('click', () => {
-            const output = captureConsoleOutput(() => demonstrateObjectTypes());
-            displayResult('result2', output);
-        });
-    }
+    buttons.btn4?.addEventListener('click', () => {
+        const output = captureConsoleOutput1(() => demonstrateUnionTypes());
+        displayResult1('result4', output);
+    });
 
-    if (btn3) {
-        btn3.addEventListener('click', () => {
-            const output = captureConsoleOutput(() => demonstrateFunctionTypes());
-            displayResult('result3', output);
-        });
-    }
+    buttons.btn5?.addEventListener('click', () => {
+        const output = captureConsoleOutput1(() => demonstrateTypeAliases());
+        displayResult1('result5', output);
+    });
 
-    if (btn4) {
-        btn4.addEventListener('click', () => {
-            const output = captureConsoleOutput(() => demonstrateUnionTypes());
-            displayResult('result4', output);
-        });
-    }
+    buttons.btn6?.addEventListener('click', () => {
+        const output = captureConsoleOutput1(() => demonstrateArraysAndTuples());
+        displayResult1('result6', output);
+    });
 
-    if (btn5) {
-        btn5.addEventListener('click', () => {
-            const output = captureConsoleOutput(() => demonstrateTypeAliases());
-            displayResult('result5', output);
-        });
-    }
+    buttons.btn7?.addEventListener('click', () => {
+        const output = captureConsoleOutput1(() => demonstrateSpecialTypes());
+        displayResult1('result7', output);
+    });
 
-    if (btn6) {
-        btn6.addEventListener('click', () => {
-            const output = captureConsoleOutput(() => demonstrateArraysAndTuples());
-            displayResult('result6', output);
-        });
-    }
-
-    if (btn7) {
-        btn7.addEventListener('click', () => {
-            const output = captureConsoleOutput(() => demonstrateSpecialTypes());
-            displayResult('result7', output);
-        });
-    }
-
-    if (btn8) {
-        btn8.addEventListener('click', () => {
-            const output = captureConsoleOutput(() => demonstrateTypeAnnotationVsInference());
-            displayResult('result8', output);
-        });
-    }
+    buttons.btn8?.addEventListener('click', () => {
+        const output = captureConsoleOutput1(() => demonstrateTypeAnnotationVsInference());
+        displayResult1('result8', output);
+    });
 }); 

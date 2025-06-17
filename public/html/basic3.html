@@ -16,33 +16,20 @@
     <section id="conditional-types">
       <h2>1. Conditional Types（条件付き型）</h2>
       <p>型の条件分岐を使った高度な型操作を学びます。</p>
-      <pre><code>// 条件付き型の例
-// T extends U ? X : Y の形式
+      <pre><code>// 条件付き型（T extends U ? X : Y）
 type IsString&lt;T&gt; = T extends string ? "文字列です" : "文字列ではありません";
+type ElementType&lt;T&gt; = T extends (infer U)[] ? U : never;
 
-// 使用例の実証
-function checkType&lt;T&gt;(value: T): IsString&lt;T> {
+function checkType&lt;T&gt;(value: T): IsString&lt;T&gt; {
     return (typeof value === "string" ? "文字列です" : "文字列ではありません") as IsString&lt;T&gt;;
 }
 
-console.log("型チェック例:");
-
-// 実行時の動作例
 const stringResult = checkType("hello");
-console.log("文字列の場合:", stringResult);
-
 const numberResult = checkType(42);
+
+console.log("文字列の場合:", stringResult);
 console.log("数値の場合:", numberResult);
-
-// 実用的な例：配列から要素の型を抽出
-type ElementType&lt;T&gt; = T extends (infer U)[] ? U : never;
-
-const numbers = [1, 2, 3];
-const strings = ["a", "b", "c"];
-
-console.log("配列の要素:");
-console.log("数値配列:", numbers);
-console.log("文字列配列:", strings);</code></pre>
+console.log("配列例:", [1, 2, 3], ["a", "b"]);</code></pre>
       <button id="btn-conditional">実行してみる</button>
       <div class="result" id="result-conditional"></div>
     </section>
@@ -50,37 +37,19 @@ console.log("文字列配列:", strings);</code></pre>
     <section id="template-literal">
       <h2>2. Template Literal Types</h2>
       <p>文字列テンプレートを型レベルで操作する方法を学びます。</p>
-      <pre><code>// テンプレートリテラル型の例
-type Greeting = `Hello, ${string}!`;
-type EventName = `on${Capitalize&lt;string&gt;}`;
-
-// 実用例：APIエンドポイントの型安全性
+      <pre><code>// テンプレートリテラル型（文字列テンプレートを型レベルで操作）
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
-type APIEndpoint = `/api/${string}`;
-type APICall = `${HTTPMethod} ${APIEndpoint}`;
+type APICall = `${HTTPMethod} /api/${string}`;
+type CSSProperty = `${"margin" | "padding"}-${"top" | "left"}`;
 
-// 実際の使用例
 function makeAPICall(endpoint: APICall): void {
     console.log(`APIを呼び出し: ${endpoint}`);
 }
 
-// 型安全なAPI呼び出し例
 makeAPICall("GET /api/users");
 makeAPICall("POST /api/users");
-makeAPICall("PUT /api/users/123");
-makeAPICall("DELETE /api/users/123");
 
-// 文字列操作の実用例
-type CSSProperty = "margin" | "padding" | "border";
-type CSSDirection = "top" | "right" | "bottom" | "left";
-type CSSPropertyWithDirection = `${CSSProperty}-${CSSDirection}`;
-
-const cssProperties: CSSPropertyWithDirection[] = [
-    "margin-top",
-    "padding-left",
-    "border-bottom"
-];
-
+const cssProperties: CSSProperty[] = ["margin-top", "padding-left"];
 console.log("CSS プロパティ例:", cssProperties);</code></pre>
       <button id="btn-template">実行してみる</button>
       <div class="result" id="result-template"></div>
@@ -89,46 +58,23 @@ console.log("CSS プロパティ例:", cssProperties);</code></pre>
     <section id="mapped-advanced">
       <h2>3. 高度なMapped Types</h2>
       <p>より複雑な型変換パターンを学びます。</p>
-      <pre><code>// 高度なMapped Types
-interface User {
-    id: number;
-    name: string;
-    email: string;
-    isActive: boolean;
-}
+      <pre><code>// 高度なMapped Types（複雑な型変換）
+interface User { id: number; name: string; email: string; isActive: boolean; }
 
-// すべてのプロパティをPromise型にする
-type PromisifiedUser = {
-    [K in keyof User]: Promise&lt;User[K]&gt;;
-};
+// 全プロパティをPromise型に変換
+type PromisifiedUser = { [K in keyof User]: Promise&lt;User[K]&gt; };
 
-// すべてのプロパティにnullを許可する
-type NullableUser = {
-    [K in keyof User]: User[K] | null;
-};
+// 文字列プロパティのみ抽出
+type StringProperties&lt;T&gt; = { [K in keyof T]: T[K] extends string ? K : never }[keyof T];
 
-// 特定の型のプロパティのみを抽出
-type StringProperties&lt;T&gt; = {
-    [K in keyof T]: T[K] extends string ? K : never;
-}[keyof T];
-
-// 実用例の実装
-const user: User = {
-    id: 1,
-    name: "田中太郎",
-    email: "tanaka@example.com",
-    isActive: true
-};
-
-// プロパティの検査例
 function getStringProperties&lt;T&gt;(obj: T): (keyof T)[] {
-    return Object.keys(obj).filter(key => 
-        typeof obj[key as keyof T] === 'string'
-    ) as (keyof T)[];
+    return Object.keys(obj).filter(key => typeof obj[key as keyof T] === 'string') as (keyof T)[];
 }
 
+const user: User = { id: 1, name: "田中太郎", email: "tanaka@example.com", isActive: true };
 const stringProps = getStringProperties(user);
-console.log("ユーザーオブジェクト:", user);
+
+console.log("ユーザー:", user);
 console.log("文字列プロパティ:", stringProps);</code></pre>
       <button id="btn-mapped-advanced">実行してみる</button>
       <div class="result" id="result-mapped-advanced"></div>
@@ -137,50 +83,29 @@ console.log("文字列プロパティ:", stringProps);</code></pre>
     <section id="discriminated-unions">
       <h2>4. Discriminated Unions（判別可能なユニオン型）</h2>
       <p>型安全な条件分岐を実現する判別可能なユニオン型を学びます。</p>
-      <pre><code>// 判別可能なユニオン型
-interface LoadingState {
-    status: "loading";
-    progress: number;
-}
-
-interface SuccessState {
-    status: "success";
-    data: string;
-}
-
-interface ErrorState {
-    status: "error";
-    error: string;
-}
+      <pre><code>// 判別可能なユニオン型（型安全な状態管理）
+interface LoadingState { status: "loading"; progress: number; }
+interface SuccessState { status: "success"; data: string; }
+interface ErrorState { status: "error"; error: string; }
 
 type AsyncState = LoadingState | SuccessState | ErrorState;
 
-// 型安全な状態処理
 function handleAsyncState(state: AsyncState): string {
     switch (state.status) {
-        case "loading":
-            return `読み込み中... ${state.progress}%`;
-        case "success":
-            return `成功: ${state.data}`;
-        case "error":
-            return `エラー: ${state.error}`;
-        default:
-            // TypeScriptが全てのケースを処理していることを保証
-            const _exhaustive: never = state;
-            return _exhaustive;
+        case "loading": return `読み込み中... ${state.progress}%`;
+        case "success": return `成功: ${state.data}`;
+        case "error": return `エラー: ${state.error}`;
+        default: const _exhaustive: never = state; return _exhaustive;
     }
 }
 
-// 実用例
 const states: AsyncState[] = [
     { status: "loading", progress: 50 },
     { status: "success", data: "データ取得完了" },
     { status: "error", error: "ネットワークエラー" }
 ];
 
-states.forEach((state, index) => {
-    console.log(`状態 ${index + 1}:`, handleAsyncState(state));
-});</code></pre>
+states.forEach((state, index) => console.log(`状態 ${index + 1}:`, handleAsyncState(state)));</code></pre>
       <button id="btn-unions">実行してみる</button>
       <div class="result" id="result-unions"></div>
     </section>
@@ -188,68 +113,26 @@ states.forEach((state, index) => {
     <section id="type-guards">
       <h2>5. Type Guards（型ガード）</h2>
       <p>実行時に型を安全に絞り込む方法を学びます。</p>
-      <pre><code>// カスタム型ガード
-interface Dog {
-    type: "dog";
-    bark(): void;
-}
-
-interface Cat {
-    type: "cat";
-    meow(): void;
-}
-
+      <pre><code>// 型ガード（実行時に型を安全に絞り込み）
+interface Dog { type: "dog"; bark(): void; }
+interface Cat { type: "cat"; meow(): void; }
 type Animal = Dog | Cat;
 
-// 型ガード関数
-function isDog(animal: Animal): animal is Dog {
-    return animal.type === "dog";
-}
+function isDog(animal: Animal): animal is Dog { return animal.type === "dog"; }
 
-function isCat(animal: Animal): animal is Cat {
-    return animal.type === "cat";
-}
-
-// 動物の実装
-const dog: Dog = {
-    type: "dog",
-    bark() { console.log("ワンワン！"); }
-};
-
-const cat: Cat = {
-    type: "cat",
-    meow() { console.log("ニャーニャー！"); }
-};
-
-// 型安全な処理
 function makeSound(animal: Animal): void {
     if (isDog(animal)) {
-        // ここではanimalはDog型として扱われる
-        animal.bark();
-        console.log("犬が鳴きました");
-    } else if (isCat(animal)) {
-        // ここではanimalはCat型として扱われる
-        animal.meow();
-        console.log("猫が鳴きました");
-    }
-}
-
-console.log("動物の鳴き声:");
-makeSound(dog);
-makeSound(cat);
-
-// in演算子を使った型ガード
-function makeSound2(animal: Animal): void {
-    if ("bark" in animal) {
-        animal.bark();
+        animal.bark(); console.log("犬が鳴きました");
     } else {
-        animal.meow();
+        animal.meow(); console.log("猫が鳴きました");
     }
 }
 
-console.log("in演算子を使った例:");
-makeSound2(dog);
-makeSound2(cat);</code></pre>
+const dog: Dog = { type: "dog", bark() { console.log("ワンワン！"); } };
+const cat: Cat = { type: "cat", meow() { console.log("ニャー！"); } };
+
+makeSound(dog);
+makeSound(cat);</code></pre>
       <button id="btn-guards">実行してみる</button>
       <div class="result" id="result-guards"></div>
     </section>
@@ -257,48 +140,31 @@ makeSound2(cat);</code></pre>
     <section id="decorators">
       <h2>6. Decorators（デコレータ）</h2>
       <p>クラスやメソッドに横断的な機能を追加する方法を学びます。</p>
-      <pre><code>// デコレータの概念（実験的機能）
-// 実際のデコレータの代わりに、同様の機能を関数で実装
-
-// ログ機能を追加する高階関数
+      <pre><code>// デコレータの概念（高階関数で実装）
 function withLogging&lt;T extends (...args: any[]) => any&gt;(fn: T): T {
     return ((...args: any[]) => {
-        console.log(`関数 ${fn.name} を実行中...`);
-        console.log(`引数:`, args);
-        
+        console.log(`関数 ${fn.name} 実行中... 引数:`, args);
         const result = fn(...args);
-        
-        console.log(`関数 ${fn.name} の実行完了`);
         console.log(`結果:`, result);
-        
         return result;
     }) as T;
 }
 
-// パフォーマンス測定機能
 function withTiming&lt;T extends (...args: any[]) => any&gt;(fn: T): T {
     return ((...args: any[]) => {
         const start = performance.now();
         const result = fn(...args);
-        const end = performance.now();
-        
-        console.log(`${fn.name} の実行時間: ${(end - start).toFixed(2)}ms`);
-        
+        console.log(`${fn.name} 実行時間: ${(performance.now() - start).toFixed(2)}ms`);
         return result;
     }) as T;
 }
 
-// 使用例
 const add = (a: number, b: number): number => a + b;
-const multiply = (a: number, b: number): number => a * b;
-
-// デコレータを適用
 const loggedAdd = withLogging(add);
-const timedMultiply = withTiming(multiply);
+const timedAdd = withTiming(add);
 
-console.log("デコレータの例:");
 loggedAdd(5, 3);
-timedMultiply(10, 20);</code></pre>
+timedAdd(10, 20);</code></pre>
       <button id="btn-decorators">実行してみる</button>
       <div class="result" id="result-decorators"></div>
     </section>
@@ -306,60 +172,26 @@ timedMultiply(10, 20);</code></pre>
     <section id="modules-namespaces">
       <h2>7. Modules と Namespaces</h2>
       <p>コードの組織化とモジュールシステムを学びます。</p>
-      <pre><code>// Namespace の概念（TypeScript独自）
+      <pre><code>// Namespace（TypeScript独自の機能）
 namespace MathUtils {
-    export function add(a: number, b: number): number {
-        return a + b;
-    }
-    
-    export function multiply(a: number, b: number): number {
-        return a * b;
-    }
-    
+    export function add(a: number, b: number): number { return a + b; }
     export const PI = 3.14159;
     
-    // プライベート関数（exportしない）
-    function privateHelper(): string {
-        return "これは内部関数です";
-    }
-    
-    export function getInfo(): string {
-        return privateHelper() + ` PI = ${PI}`;
-    }
+    function privateHelper(): string { return "内部関数"; }
+    export function getInfo(): string { return `${privateHelper()} PI = ${PI}`; }
 }
 
-// Module パターンの実装
+// Module パターン
 const StringUtils = (function() {
-    // プライベート変数
     let counter = 0;
-    
     return {
-        capitalize(str: string): string {
-            counter++;
-            return str.charAt(0).toUpperCase() + str.slice(1);
-        },
-        
-        reverse(str: string): string {
-            counter++;
-            return str.split('').reverse().join('');
-        },
-        
-        getUsageCount(): number {
-            return counter;
-        }
+        capitalize(str: string): string { counter++; return str.charAt(0).toUpperCase() + str.slice(1); },
+        getUsageCount(): number { return counter; }
     };
 })();
 
-// 使用例
-console.log("Namespace例:");
-console.log("足し算:", MathUtils.add(5, 3));
-console.log("掛け算:", MathUtils.multiply(4, 6));
-console.log("情報:", MathUtils.getInfo());
-
-console.log("Module例:");
-console.log("大文字化:", StringUtils.capitalize("hello"));
-console.log("逆順:", StringUtils.reverse("world"));
-console.log("使用回数:", StringUtils.getUsageCount());</code></pre>
+console.log("Namespace:", MathUtils.add(5, 3), MathUtils.getInfo());
+console.log("Module:", StringUtils.capitalize("hello"), "使用回数:", StringUtils.getUsageCount());</code></pre>
       <button id="btn-modules">実行してみる</button>
       <div class="result" id="result-modules"></div>
     </section>
@@ -368,60 +200,29 @@ console.log("使用回数:", StringUtils.getUsageCount());</code></pre>
       <h2>8. 非同期処理の型安全性</h2>
       <p>Promise、async/awaitでの型安全な非同期処理を学びます。</p>
       <pre><code>// 型安全な非同期処理
-interface User {
-    id: number;
-    name: string;
-    email: string;
-}
+interface UserData { id: number; name: string; email: string; }
+interface ApiResponse&lt;T&gt; { success: boolean; data?: T; error?: string; }
 
-interface ApiResponse&lt;T&gt; {
-    success: boolean;
-    data?: T;
-    error?: string;
-}
-
-// 型安全なAPI呼び出し
-async function fetchUser(id: number): Promise&lt;ApiResponse&lt;User&gt;&gt; {
+async function fetchUser(id: number): Promise&lt;ApiResponse&lt;UserData&gt;&gt; {
     try {
         console.log(`ユーザー ${id} のデータを取得中...`);
-        
-        // 模擬的な非同期処理
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 500));
         
         if (id > 0) {
-            return {
-                success: true,
-                data: {
-                    id,
-                    name: `ユーザー${id}`,
-                    email: `user${id}@example.com`
-                }
-            };
+            return { success: true, data: { id, name: `ユーザー${id}`, email: `user${id}@example.com` } };
         } else {
-            return {
-                success: false,
-                error: "無効なユーザーIDです"
-            };
+            return { success: false, error: "無効なユーザーID" };
         }
     } catch (error) {
-        return {
-            success: false,
-            error: "サーバーエラーが発生しました"
-        };
+        return { success: false, error: "サーバーエラー" };
     }
 }
 
-// 使用例
 async function demonstrateAsyncTypes(): Promise&lt;void&gt; {
-    console.log("非同期処理の開始");
-    
     const result = await fetchUser(123);
     
     if (result.success && result.data) {
-        console.log("取得成功:");
-        console.log(`ID: ${result.data.id}`);
-        console.log(`名前: ${result.data.name}`);
-        console.log(`メール: ${result.data.email}`);
+        console.log("取得成功:", `ID: ${result.data.id}, 名前: ${result.data.name}`);
     } else {
         console.log("取得失敗:", result.error);
     }
@@ -435,80 +236,35 @@ demonstrateAsyncTypes();</code></pre>
     <section id="real-world">
       <h2>9. 実践的なTypeScript設計パターン</h2>
       <p>実際のプロジェクトで使える設計パターンを学びます。</p>
-      <pre><code>// Builder パターンの実装
+      <pre><code>// 設計パターン（Builder / Factory）
+interface User { id: number; name: string; email: string; isActive?: boolean; }
+
 class UserBuilder {
     private user: Partial&lt;User&gt; = {};
     
-    setId(id: number): UserBuilder {
-        this.user.id = id;
-        return this;
-    }
-    
-    setName(name: string): UserBuilder {
-        this.user.name = name;
-        return this;
-    }
-    
-    setEmail(email: string): UserBuilder {
-        this.user.email = email;
-        return this;
-    }
-    
-    setActive(isActive: boolean): UserBuilder {
-        this.user.isActive = isActive;
-        return this;
-    }
+    setId(id: number): UserBuilder { this.user.id = id; return this; }
+    setName(name: string): UserBuilder { this.user.name = name; return this; }
+    setEmail(email: string): UserBuilder { this.user.email = email; return this; }
     
     build(): User {
         if (!this.user.id || !this.user.name || !this.user.email) {
-            throw new Error("必須フィールドが不足しています");
+            throw new Error("必須フィールドが不足");
         }
-        
-        return {
-            id: this.user.id,
-            name: this.user.name,
-            email: this.user.email,
-            isActive: this.user.isActive ?? true
-        };
+        return { id: this.user.id, name: this.user.name, email: this.user.email, isActive: true };
     }
 }
 
-// Factory パターンの実装
 class UserFactory {
     static createAdmin(name: string): User {
-        return new UserBuilder()
-            .setId(Date.now())
-            .setName(name)
-            .setEmail(`${name.toLowerCase()}@admin.com`)
-            .setActive(true)
-            .build();
-    }
-    
-    static createGuest(): User {
-        return new UserBuilder()
-            .setId(0)
-            .setName("ゲスト")
-            .setEmail("guest@example.com")
-            .setActive(false)
-            .build();
+        return new UserBuilder().setId(Date.now()).setName(name).setEmail(`${name.toLowerCase()}@admin.com`).build();
     }
 }
 
-// 使用例
-console.log("設計パターンの例:");
-
-const user1 = new UserBuilder()
-    .setId(1)
-    .setName("田中太郎")
-    .setEmail("tanaka@example.com")
-    .build();
-
+const user1 = new UserBuilder().setId(1).setName("田中太郎").setEmail("tanaka@example.com").build();
 const admin = UserFactory.createAdmin("管理者");
-const guest = UserFactory.createGuest();
 
-console.log("ビルダーで作成:", user1);
-console.log("ファクトリで作成（管理者）:", admin);
-console.log("ファクトリで作成（ゲスト）:", guest);</code></pre>
+console.log("ビルダー作成:", user1);
+console.log("ファクトリ作成:", admin);</code></pre>
       <button id="btn-patterns">実行してみる</button>
       <div class="result" id="result-patterns"></div>
     </section>
@@ -516,67 +272,29 @@ console.log("ファクトリで作成（ゲスト）:", guest);</code></pre>
     <section id="type-challenges">
       <h2>10. TypeScript型チャレンジ</h2>
       <p>複雑な型操作の実践的な例を学びます。</p>
-      <pre><code>// 深いオブジェクトの型安全な操作
-type DeepReadonly&lt;T&gt; = {
-    readonly [P in keyof T]: T[P] extends object ? DeepReadonly&lt;T[P]&gt; : T[P];
-};
+      <pre><code>// 高度な型操作
+type DeepReadonly&lt;T&gt; = { readonly [P in keyof T]: T[P] extends object ? DeepReadonly&lt;T[P]&gt; : T[P] };
 
-// オブジェクトのキーパスを型安全に取得
-type PathsToStringProps&lt;T&gt; = T extends string
-    ? []
-    : {
-        [K in Extract&lt;keyof T, string&gt;]: [K, ...PathsToStringProps&lt;T[K]&gt;];
-    }[Extract&lt;keyof T, string&gt;];
-
-// 実用的な型ユーティリティ
 interface NestedUser {
     id: number;
-    profile: {
-        name: string;
-        contact: {
-            email: string;
-            phone: string;
-        };
-    };
-    preferences: {
-        theme: string;
-        language: string;
-    };
+    profile: { name: string; contact: { email: string; phone: string; }; };
+    preferences: { theme: string; language: string; };
 }
 
-// 型安全なプロパティアクセス
 function getNestedProperty&lt;T, K extends keyof T&gt;(obj: T, key: K): T[K] {
     return obj[key];
 }
 
-// 実用例
 const nestedUser: NestedUser = {
     id: 1,
-    profile: {
-        name: "田中太郎",
-        contact: {
-            email: "tanaka@example.com",
-            phone: "090-1234-5678"
-        }
-    },
-    preferences: {
-        theme: "dark",
-        language: "ja"
-    }
+    profile: { name: "田中太郎", contact: { email: "tanaka@example.com", phone: "090-1234-5678" } },
+    preferences: { theme: "dark", language: "ja" }
 };
 
-console.log("ネストしたオブジェクトの例:");
 console.log("ユーザー:", nestedUser);
 console.log("プロフィール:", getNestedProperty(nestedUser, "profile"));
 console.log("名前:", nestedUser.profile.name);
-console.log("メール:", nestedUser.profile.contact.email);
-
-// 型の条件チェック例
-type IsArray&lt;T&gt; = T extends any[] ? true : false;
-type ArrayCheck1 = IsArray&lt;string[]&gt;;  // true
-type ArrayCheck2 = IsArray&lt;string&gt;;    // false
-
-console.log("型レベルでの配列チェック例を実装しました");</code></pre>
+console.log("メール:", nestedUser.profile.contact.email);</code></pre>
       <button id="btn-challenges">実行してみる</button>
       <div class="result" id="result-challenges"></div>
     </section>
@@ -584,6 +302,6 @@ console.log("型レベルでの配列チェック例を実装しました");</co
   <div style="text-align:center; margin: 0 0 20px 0;">
     <button onclick="location.href='basic2.html'">◀ 応用編へ</button>
   </div>
-  <script type="module" src="../js/basic3.js"></script>
+  <script src="../js/basic3.js"></script>
 </body>
 </html> 

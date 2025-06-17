@@ -16,7 +16,7 @@
     <section id="interface-basic">
       <h2>1. Interface（インターフェース）</h2>
       <p>オブジェクトの構造を定義する方法を学びます。</p>
-      <pre><code>// インターフェースの定義
+      <pre><code>// インターフェース定義
 interface User {
     id: number;
     name: string;
@@ -24,20 +24,8 @@ interface User {
     isActive?: boolean;  // オプショナル
 }
 
-// インターフェースを使用
-const user1: User = {
-    id: 1,
-    name: "田中太郎",
-    email: "tanaka@example.com",
-    isActive: true
-};
-
-const user2: User = {
-    id: 2,
-    name: "佐藤花子",
-    email: "sato@example.com"
-    // isActiveは省略可能
-};
+const user1: User = { id: 1, name: "田中太郎", email: "tanaka@example.com", isActive: true };
+const user2: User = { id: 2, name: "佐藤花子", email: "sato@example.com" };
 
 console.log("ユーザー1:", user1);
 console.log("ユーザー2:", user2);</code></pre>
@@ -51,29 +39,15 @@ console.log("ユーザー2:", user2);</code></pre>
       <pre><code>// メソッドを持つインターフェース
 interface Calculator {
     add(a: number, b: number): number;
-    subtract(a: number, b: number): number;
     multiply(a: number, b: number): number;
 }
 
-// インターフェースを実装
 const calculator: Calculator = {
-    add: (a, b) => {
-        console.log(`${a} + ${b} = ${a + b}`);
-        return a + b;
-    },
-    subtract: (a, b) => {
-        console.log(`${a} - ${b} = ${a - b}`);
-        return a - b;
-    },
-    multiply: (a, b) => {
-        console.log(`${a} × ${b} = ${a * b}`);
-        return a * b;
-    }
+    add: (a, b) => { console.log(`${a} + ${b} = ${a + b}`); return a + b; },
+    multiply: (a, b) => { console.log(`${a} × ${b} = ${a * b}`); return a * b; }
 };
 
-// 使用例
 calculator.add(5, 3);
-calculator.subtract(10, 4);
 calculator.multiply(6, 7);</code></pre>
       <button id="btn-interface-method">実行してみる</button>
       <div class="result" id="result-interface-method"></div>
@@ -82,34 +56,24 @@ calculator.multiply(6, 7);</code></pre>
     <section id="class-basic">
       <h2>3. Class（クラス）</h2>
       <p>TypeScriptのクラス定義と型安全性を学びます。</p>
-      <pre><code>// クラスの定義
+      <pre><code>// クラス定義（アクセス修飾子）
 class Animal {
     private name: string;
     protected species: string;
-    public age: number;
 
-    constructor(name: string, species: string, age: number) {
+    constructor(name: string, species: string, public age: number) {
         this.name = name;
         this.species = species;
-        this.age = age;
-        console.log(`${species}の${name}を作成しました`);
+        console.log(`${species}の${name}を作成`);
     }
 
-    public getName(): string {
-        return this.name;
-    }
-
-    public getInfo(): string {
+    getInfo(): string {
         return `${this.species}の${this.name}（${this.age}歳）`;
     }
 }
 
-// インスタンス作成
 const dog = new Animal("ポチ", "犬", 3);
-const cat = new Animal("ミケ", "猫", 2);
-
-console.log(dog.getInfo());
-console.log(cat.getInfo());</code></pre>
+console.log(dog.getInfo());</code></pre>
       <button id="btn-class">実行してみる</button>
       <div class="result" id="result-class"></div>
     </section>
@@ -117,41 +81,21 @@ console.log(cat.getInfo());</code></pre>
     <section id="class-inheritance">
       <h2>4. クラスの継承</h2>
       <p>継承とポリモーフィズムを学びます。</p>
-      <pre><code>// 基底クラス
+      <pre><code>// 継承（extends）
 class Vehicle {
-    protected brand: string;
-    protected model: string;
-
-    constructor(brand: string, model: string) {
-        this.brand = brand;
-        this.model = model;
-    }
-
-    public getInfo(): string {
-        return `${this.brand} ${this.model}`;
-    }
-
-    public start(): void {
-        console.log(`${this.getInfo()}を始動しました`);
-    }
+    constructor(protected brand: string, protected model: string) {}
+    
+    getInfo(): string { return `${this.brand} ${this.model}`; }
+    start(): void { console.log(`${this.getInfo()}を始動`); }
 }
 
-// 継承クラス
 class Car extends Vehicle {
-    private doors: number;
-
-    constructor(brand: string, model: string, doors: number) {
-        super(brand, model);  // 親クラスのコンストラクタ呼び出し
-        this.doors = doors;
+    constructor(brand: string, model: string, private doors: number) {
+        super(brand, model);  // 親コンストラクタ呼び出し
     }
-
-    public getInfo(): string {  // オーバーライド
-        return `${super.getInfo()}（${this.doors}ドア）`;
-    }
-
-    public drive(): void {
-        console.log(`${this.getInfo()}で運転中...`);
-    }
+    
+    getInfo(): string { return `${super.getInfo()}（${this.doors}ドア）`; }
+    drive(): void { console.log(`${this.getInfo()}で運転中`); }
 }
 
 const car = new Car("トヨタ", "プリウス", 4);
@@ -164,46 +108,28 @@ car.drive();</code></pre>
     <section id="interface-class">
       <h2>5. InterfaceとClassの組み合わせ</h2>
       <p>インターフェースを実装するクラスの作成方法を学びます。</p>
-      <pre><code>// インターフェースの定義
-interface Flyable {
-    fly(): void;
-    altitude: number;
-}
+      <pre><code>// インターフェース実装（implements）
+interface Flyable { fly(): void; altitude: number; }
+interface Swimmable { swim(): void; depth: number; }
 
-interface Swimmable {
-    swim(): void;
-    depth: number;
-}
-
-// 複数のインターフェースを実装
 class Duck implements Flyable, Swimmable {
-    altitude: number = 0;
-    depth: number = 0;
-    private name: string;
+    altitude = 0;
+    depth = 0;
 
-    constructor(name: string) {
-        this.name = name;
-    }
+    constructor(private name: string) {}
 
     fly(): void {
         this.altitude = 100;
-        console.log(`${this.name}が高度${this.altitude}mで飛んでいます`);
+        console.log(`${this.name}が高度${this.altitude}mで飛行`);
     }
 
     swim(): void {
         this.depth = 2;
-        console.log(`${this.name}が深度${this.depth}mで泳いでいます`);
-    }
-
-    walk(): void {
-        this.altitude = 0;
-        this.depth = 0;
-        console.log(`${this.name}が地上を歩いています`);
+        console.log(`${this.name}が深度${this.depth}mで泳ぐ`);
     }
 }
 
 const duck = new Duck("アヒル");
-duck.walk();
 duck.fly();
 duck.swim();</code></pre>
       <button id="btn-interface-class">実行してみる</button>
@@ -214,26 +140,17 @@ duck.swim();</code></pre>
       <h2>6. Generics（ジェネリクス）基礎</h2>
       <p>型パラメータを使って再利用可能なコードを書く方法を学びます。</p>
       <pre><code>// ジェネリック関数
+// ジェネリック関数（型パラメータ&lt;T&gt;）
 function identity&lt;T&gt;(arg: T): T {
-    console.log("引数の型:", typeof arg);
-    console.log("値:", arg);
+    console.log("型:", typeof arg, "値:", arg);
     return arg;
 }
 
-// 使用例
 const numberResult = identity&lt;number&gt;(42);
-const stringResult = identity&lt;string&gt;("こんにちは");
-const boolResult = identity&lt;boolean&gt;(true);
+const stringResult = identity("こんにちは");  // 型推論
 
 console.log("数値結果:", numberResult);
-console.log("文字列結果:", stringResult);
-console.log("真偽値結果:", boolResult);
-
-// 型推論も可能
-const autoNumber = identity(123);  // number型として推論
-const autoString = identity("自動推論");  // string型として推論
-console.log("自動推論された数値:", autoNumber);
-console.log("自動推論された文字列:", autoString);</code></pre>
+console.log("文字列結果:", stringResult);</code></pre>
       <button id="btn-generics">実行してみる</button>
       <div class="result" id="result-generics"></div>
     </section>
@@ -241,41 +158,22 @@ console.log("自動推論された文字列:", autoString);</code></pre>
     <section id="generics-class">
       <h2>7. ジェネリッククラス</h2>
       <p>型パラメータを持つクラスの作成方法を学びます。</p>
-      <pre><code>// ジェネリッククラス
+      <pre><code>// ジェネリッククラス（型パラメータを持つクラス）
 class Box&lt;T&gt; {
-    private value: T;
-
-    constructor(value: T) {
-        this.value = value;
-        console.log(`Box作成: 型 ${typeof value}, 値 ${value}`);
+    constructor(private value: T) {
+        console.log(`Box作成: ${typeof value}型`);
     }
 
-    getValue(): T {
-        return this.value;
-    }
-
-    setValue(value: T): void {
-        this.value = value;
-        console.log(`値を更新: ${value}`);
-    }
-
-    getType(): string {
-        return typeof this.value;
-    }
+    getValue(): T { return this.value; }
+    setValue(value: T): void { this.value = value; }
 }
 
-// 様々な型のBoxを作成
 const numberBox = new Box&lt;number&gt;(42);
-const stringBox = new Box&lt;string&gt;("TypeScript");
-const booleanBox = new Box&lt;boolean&gt;(true);
+const stringBox = new Box("TypeScript");  // 型推論
 
 console.log("数値Box:", numberBox.getValue());
 console.log("文字列Box:", stringBox.getValue());
-console.log("真偽値Box:", booleanBox.getValue());
-
-// 値の更新
-numberBox.setValue(100);
-stringBox.setValue("更新された文字列");</code></pre>
+numberBox.setValue(100);</code></pre>
       <button id="btn-generics-class">実行してみる</button>
       <div class="result" id="result-generics-class"></div>
     </section>
@@ -283,37 +181,25 @@ stringBox.setValue("更新された文字列");</code></pre>
     <section id="generics-constraints">
       <h2>8. ジェネリック制約</h2>
       <p>ジェネリックに制約を設ける方法を学びます。</p>
-      <pre><code>// 制約のあるジェネリック
-interface Lengthwise {
-    length: number;
-}
+      <pre><code>// ジェネリック制約（extends）
+interface Lengthwise { length: number; }
 
 function logLength&lt;T extends Lengthwise&gt;(arg: T): T {
-    console.log(`長さ: ${arg.length}`);
-    console.log(`値: ${arg}`);
+    console.log(`長さ: ${arg.length}, 値: ${arg}`);
     return arg;
 }
 
-// lengthプロパティを持つものだけ受け入れる
-logLength("文字列");           // string.length
-logLength([1, 2, 3, 4, 5]);   // Array.length
-
-// オブジェクトのキーを安全に取得
+// keyof演算子で型安全なプロパティアクセス
 function getProperty&lt;T, K extends keyof T&gt;(obj: T, key: K): T[K] {
-    console.log(`${String(key)}プロパティの値:`, obj[key]);
     return obj[key];
 }
 
-const person = { 
-    name: "田中太郎", 
-    age: 30, 
-    city: "東京" 
-};
+logLength("文字列");      // string.length
+logLength([1, 2, 3]);    // Array.length
 
-const name = getProperty(person, "name");     // string型
-const age = getProperty(person, "age");       // number型
-console.log("取得した名前:", name);
-console.log("取得した年齢:", age);</code></pre>
+const person = { name: "田中太郎", age: 30 };
+console.log("名前:", getProperty(person, "name"));
+console.log("年齢:", getProperty(person, "age"));</code></pre>
       <button id="btn-constraints">実行してみる</button>
       <div class="result" id="result-constraints"></div>
     </section>
@@ -321,37 +207,21 @@ console.log("取得した年齢:", age);</code></pre>
     <section id="utility-types">
       <h2>9. ユーティリティ型</h2>
       <p>TypeScriptの便利な組み込みユーティリティ型を学びます。</p>
-      <pre><code>// 元の型
-interface OriginalUser {
-    id: number;
-    name: string;
-    email: string;
-    isActive: boolean;
-}
+      <pre><code>// ユーティリティ型（組み込み型変換）
+interface User { id: number; name: string; email: string; isActive: boolean; }
 
-// Partial&lt;T&gt; - すべてのプロパティをオプショナルに
-type PartialUser = Partial&lt;OriginalUser&gt;;
-const updateUser: PartialUser = {
-    name: "更新された名前"  // 一部のプロパティのみ
-};
-console.log("部分更新用オブジェクト:", updateUser);
+// Partial&lt;T&gt; - 全プロパティをオプショナルに
+const updateUser: Partial&lt;User&gt; = { name: "更新された名前" };
 
-// Pick&lt;T, K&gt; - 特定のプロパティだけ抽出
-type UserSummary = Pick&lt;OriginalUser, "id" | "name"&gt;;
-const summary: UserSummary = {
-    id: 1,
-    name: "田中太郎"
-};
-console.log("ユーザー概要:", summary);
+// Pick&lt;T, K&gt; - 特定プロパティのみ抽出
+const summary: Pick&lt;User, "id" | "name"&gt; = { id: 1, name: "田中太郎" };
 
-// Omit&lt;T, K&gt; - 特定のプロパティを除外
-type UserWithoutId = Omit&lt;OriginalUser, "id"&gt;;
-const newUser: UserWithoutId = {
-    name: "新規ユーザー",
-    email: "new@example.com",
-    isActive: true
-};
-console.log("ID以外のユーザー情報:", newUser);</code></pre>
+// Omit&lt;T, K&gt; - 特定プロパティを除外
+const newUser: Omit&lt;User, "id"&gt; = { name: "新規", email: "new@example.com", isActive: true };
+
+console.log("部分更新:", updateUser);
+console.log("概要:", summary);
+console.log("新規:", newUser);</code></pre>
       <button id="btn-utility">実行してみる</button>
       <div class="result" id="result-utility"></div>
     </section>
@@ -359,50 +229,22 @@ console.log("ID以外のユーザー情報:", newUser);</code></pre>
     <section id="mapped-types">
       <h2>10. Mapped Types（マップド型）</h2>
       <p>既存の型を変換して新しい型を作る方法を学びます。</p>
-      <pre><code>// 元の型
-interface User {
-    name: string;
-    age: number;
-    email: string;
-}
+      <pre><code>// Mapped Types（既存の型を変換）
+interface User { name: string; age: number; email: string; }
 
-// すべてのプロパティをreadonly（読み取り専用）にする
-type ReadonlyUser = {
-    readonly [K in keyof User]: User[K];
-};
+// 全プロパティをreadonly化
+type ReadonlyUser = { readonly [K in keyof User]: User[K] };
 
-// すべてのプロパティをオプショナルにする
-type OptionalUser = {
-    [K in keyof User]?: User[K];
-};
+// 全プロパティを文字列化
+type StringifiedUser = { [K in keyof User]: string };
 
-// すべてのプロパティを文字列にする
-type StringifiedUser = {
-    [K in keyof User]: string;
-};
+const user: User = { name: "田中太郎", age: 30, email: "tanaka@example.com" };
+const readonlyUser: ReadonlyUser = { name: "読み取り専用", age: 25, email: "readonly@example.com" };
+const stringifiedUser: StringifiedUser = { name: "文字列名前", age: "30", email: "string@example.com" };
 
-// 使用例
-const user: User = {
-    name: "田中太郎",
-    age: 30,
-    email: "tanaka@example.com"
-};
-
-const readonlyUser: ReadonlyUser = {
-    name: "読み取り専用ユーザー",
-    age: 25,
-    email: "readonly@example.com"
-};
-
-const stringifiedUser: StringifiedUser = {
-    name: "文字列名前",
-    age: "30",    // 数値も文字列として扱う
-    email: "string@example.com"
-};
-
-console.log("通常のユーザー:", user);
-console.log("読み取り専用ユーザー:", readonlyUser);
-console.log("文字列化ユーザー:", stringifiedUser);</code></pre>
+console.log("通常:", user);
+console.log("読み取り専用:", readonlyUser);
+console.log("文字列化:", stringifiedUser);</code></pre>
       <button id="btn-mapped">実行してみる</button>
       <div class="result" id="result-mapped"></div>
     </section>
@@ -411,6 +253,6 @@ console.log("文字列化ユーザー:", stringifiedUser);</code></pre>
         <button onclick="location.href='basic3.html'">上級編へ ▶</button>
     </div>
   </main>
-  <script type="module" src="../js/basic2.js"></script>
+  <script src="../js/basic2.js"></script>
 </body>
 </html> 

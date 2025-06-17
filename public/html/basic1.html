@@ -22,25 +22,14 @@
     <section id="section1">
       <h2>1. 基本的な型</h2>
       <p>TypeScriptの基本的な型システムを学びます。</p>
-      <pre><code>// 数値型
+      <pre><code>// 基本的な型
 let age: number = 25;
-console.log("年齢:", age);
-
-// 文字列型
 let name: string = "田中太郎";
-console.log("名前:", name);
-
-// 真偽値型
 let isStudent: boolean = true;
-console.log("学生か:", isStudent);
-
-// 配列型
 let colors: string[] = ["赤", "青", "緑"];
-console.log("色配列:", colors);
 
-// 数値配列の別の書き方
-let scores: Array&lt;number&gt; = [85, 90, 78];
-console.log("得点配列:", scores);</code></pre>
+console.log("年齢:", age, "名前:", name);
+console.log("学生:", isStudent, "色:", colors);</code></pre>
       <button id="btn1">実行してみる</button>
       <div class="result" id="result1"></div>
     </section>
@@ -49,24 +38,18 @@ console.log("得点配列:", scores);</code></pre>
     <section id="section2">
       <h2>2. オブジェクト型</h2>
       <p>オブジェクトの型定義方法を学びます。</p>
-      <pre><code>// オブジェクト型の定義
-let person: { name: string; age: number; isActive: boolean } = {
-    name: "佐藤花子",
-    age: 30,
-    isActive: true
+      <pre><code>// オブジェクト型
+let person: { name: string; age: number } = {
+    name: "佐藤花子", age: 30
 };
-console.log("人物情報:", person);
 
-// オプショナルプロパティ
+// オプショナルプロパティ（?）
 let user: { name: string; email?: string } = {
     name: "山田太郎"
-    // emailは省略可能
 };
-console.log("ユーザー情報:", user);
-
-// 後でemailを追加
 user.email = "yamada@example.com";
-console.log("email追加後:", user);</code></pre>
+
+console.log("人物:", person, "ユーザー:", user);</code></pre>
       <button id="btn2">実行してみる</button>
       <div class="result" id="result2"></div>
     </section>
@@ -79,21 +62,14 @@ console.log("email追加後:", user);</code></pre>
 function add(x: number, y: number): number {
     return x + y;
 }
-console.log("5 + 3 =", add(5, 3));
 
-// アロー関数の型注釈
-const multiply = (x: number, y: number): number => x * y;
-console.log("4 × 6 =", multiply(4, 6));
-
-// オプション引数
+// オプション引数（?）
 function greet(name: string, title?: string): string {
-    if (title) {
-        return `こんにちは、${title}${name}さん！`;
-    }
-    return `こんにちは、${name}さん！`;
+    return title ? `こんにちは、${title}${name}さん！` : `こんにちは、${name}さん！`;
 }
-console.log(greet("田中"));
-console.log(greet("佐藤", "さん"));</code></pre>
+
+console.log("5 + 3 =", add(5, 3));
+console.log(greet("田中"), greet("佐藤", "さん"));</code></pre>
       <button id="btn3">実行してみる</button>
       <div class="result" id="result3"></div>
     </section>
@@ -104,23 +80,15 @@ console.log(greet("佐藤", "さん"));</code></pre>
       <p>複数の型を組み合わせるUnion型を学びます。</p>
       <pre><code>// Union型（複数の型のいずれか）
 let id: number | string;
-
 id = 123;
-console.log("数値のID:", id);
-
 id = "USER001";
-console.log("文字列のID:", id);
 
-// 関数でのUnion型使用
+// 型ガードで安全に処理
 function formatId(id: number | string): string {
-    if (typeof id === "number") {
-        return `ID: ${id.toString().padStart(6, "0")}`;
-    } else {
-        return `ID: ${id.toUpperCase()}`;
-    }
+    return typeof id === "number" ? `ID: ${id.toString().padStart(6, "0")}` : `ID: ${id.toUpperCase()}`;
 }
-console.log(formatId(42));
-console.log(formatId("abc123"));</code></pre>
+
+console.log(formatId(42), formatId("abc123"));</code></pre>
       <button id="btn4">実行してみる</button>
       <div class="result" id="result4"></div>
     </section>
@@ -129,29 +97,19 @@ console.log(formatId("abc123"));</code></pre>
     <section id="section5">
       <h2>5. 型エイリアス</h2>
       <p>型に名前を付けて再利用する方法を学びます。</p>
-      <pre><code>// 型エイリアスの定義
+      <pre><code>// 型エイリアス（再利用可能な型定義）
 type Status = "pending" | "completed" | "failed";
-type User = {
-    id: number;
-    name: string;
-    status: Status;
-};
+type User = { id: number; name: string; status: Status };
 
-// 型エイリアスの使用
-let currentUser: User = {
-    id: 1,
-    name: "鈴木一郎",
-    status: "pending"
-};
-console.log("ユーザー:", currentUser);
+let currentUser: User = { id: 1, name: "鈴木一郎", status: "pending" };
 
 // 型安全な関数
 function updateStatus(user: User, newStatus: Status): User {
     return { ...user, status: newStatus };
 }
 
-let updatedUser = updateStatus(currentUser, "completed");
-console.log("更新後:", updatedUser);</code></pre>
+console.log("元:", currentUser);
+console.log("更新後:", updateStatus(currentUser, "completed"));</code></pre>
       <button id="btn5">実行してみる</button>
       <div class="result" id="result5"></div>
     </section>
@@ -161,23 +119,18 @@ console.log("更新後:", updatedUser);</code></pre>
       <h2>6. 配列とタプル</h2>
       <p>配列とタプル（固定長配列）の型定義を学びます。</p>
       <pre><code>// 配列型
-let numbers: number[] = [1, 2, 3, 4, 5];
-console.log("数値配列:", numbers);
+let numbers: number[] = [1, 2, 3];
 
 // タプル型（固定長・型が決まった配列）
 let coordinate: [number, number] = [10, 20];
-console.log("座標:", coordinate);
-console.log("X座標:", coordinate[0]);
-console.log("Y座標:", coordinate[1]);
+let person: [string, number] = ["田中太郎", 25];
 
-// ラベル付きタプル
-let person: [name: string, age: number, isActive: boolean] = 
-    ["田中太郎", 25, true];
-console.log("人物タプル:", person);
+// 型推論
+let fruits = ["りんご", "バナナ"];  // string[]として推論
 
-// 配列の型推論
-let fruits = ["りんご", "バナナ", "オレンジ"];  // string[]として推論
-console.log("果物配列:", fruits);</code></pre>
+console.log("数値配列:", numbers);
+console.log("座標:", coordinate, "人物:", person);
+console.log("果物:", fruits);</code></pre>
       <button id="btn6">実行してみる</button>
       <div class="result" id="result6"></div>
     </section>
@@ -186,38 +139,24 @@ console.log("果物配列:", fruits);</code></pre>
     <section id="section7">
       <h2>7. never, any, unknown型</h2>
       <p>特殊な型について学びます。</p>
-      <pre><code>// any型（型チェックを無効にする）
+      <pre><code>// any型（型チェック無効）
 let anyValue: any = 42;
 anyValue = "文字列";
-anyValue = true;
-console.log("any型の値:", anyValue);
 
 // unknown型（安全なany）
 let unknownValue: unknown = "何かの値";
-console.log("unknown型の値:", unknownValue);
-
-// unknown型は型チェックが必要
 if (typeof unknownValue === "string") {
     console.log("文字列として処理:", unknownValue.toUpperCase());
 }
 
-// never型を返す関数（例外を投げる）
-function throwError(message: string): never {
-    throw new Error(message);
+// never型（絶対に戻らない関数）
+function processValue(value: string | number): string {
+    if (typeof value === "string") return value.toUpperCase();
+    if (typeof value === "number") return value.toString();
+    throw new Error("予期しない型");  // never型
 }
 
-// 実際の使用例
-function processValue(value: string | number): string {
-    if (typeof value === "string") {
-        return value.toUpperCase();
-    } else if (typeof value === "number") {
-        return value.toString();
-    } else {
-        // この部分は到達しないはず（never型）
-        return throwError("予期しない型です");
-    }
-}
-console.log("処理結果:", processValue("hello"));</code></pre>
+console.log("any:", anyValue, "処理結果:", processValue("hello"));</code></pre>
       <button id="btn7">実行してみる</button>
       <div class="result" id="result7"></div>
     </section>
@@ -229,31 +168,17 @@ console.log("処理結果:", processValue("hello"));</code></pre>
       <pre><code>// 型推論（TypeScriptが自動で型を決定）
 let inferredString = "これは文字列";  // string型として推論
 let inferredNumber = 42;             // number型として推論
-let inferredArray = [1, 2, 3];       // number[]として推論
-
-console.log("推論された型の例:");
-console.log("文字列:", inferredString);
-console.log("数値:", inferredNumber);
-console.log("配列:", inferredArray);
 
 // 明示的な型注釈
-let explicitString: string = "明示的に指定した文字列";
-let explicitNumber: number = 100;
-let explicitArray: string[] = ["a", "b", "c"];
+let explicitString: string = "明示的に指定";
+let explicitArray: string[] = ["a", "b"];
 
-console.log("明示的な型の例:");
-console.log("文字列:", explicitString);
-console.log("数値:", explicitNumber);
-console.log("配列:", explicitArray);
+// オブジェクトの型推論
+const user = { name: "佐藤", age: 25, isActive: true };
 
-// 型推論が役立つ例
-const user = {
-    name: "佐藤",
-    age: 25,
-    isActive: true
-};
-// userは自動で { name: string; age: number; isActive: boolean; } 型として推論
-console.log("推論されたオブジェクト:", user);</code></pre>
+console.log("推論:", inferredString, inferredNumber);
+console.log("明示:", explicitString, explicitArray);
+console.log("オブジェクト推論:", user);</code></pre>
       <button id="btn8">実行してみる</button>
       <div class="result" id="result8"></div>
     </section>
@@ -261,6 +186,6 @@ console.log("推論されたオブジェクト:", user);</code></pre>
       <button onclick="location.href='basic2.html'">応用編へ ▶</button>
     </div>
   </main>
-  <script type="module" src="../js/basic1.js"></script>
+  <script src="../js/basic1.js"></script>
 </body>
 </html> 
