@@ -9,9 +9,7 @@ type EventName = `on${Capitalize<string>}`;
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
 type APIEndpoint = `/api/${string}`;
 type APICall = `${HTTPMethod} ${APIEndpoint}`;
-type CSSProperty = "margin" | "padding" | "border";
-type CSSDirection = "top" | "right" | "bottom" | "left";
-type CSSPropertyWithDirection = `${CSSProperty}-${CSSDirection}`;
+type CSSProperty = `${"margin" | "padding"}-${"top" | "left"}`;
 interface User {
     id: number;
     name: string;
@@ -137,26 +135,23 @@ declare function fetchUser(id: number): Promise<ApiResponse<UserData>>;
  * 非同期処理とPromise型の使用例を示す
  */
 declare function demonstrateAsyncTypes(): Promise<void>;
-declare class UserBuilder {
-    private user;
-    setId(id: number): UserBuilder;
-    setName(name: string): UserBuilder;
-    setEmail(email: string): UserBuilder;
-    build(): UserData;
-}
-declare class UserFactory {
-    static createAdmin(name: string): UserData;
-    static createGuest(): UserData;
-}
 /**
- * デザインパターンの使用例を示す
+ * 再帰的型とAdvanced Typesの使用例を示す
  */
-declare function demonstrateDesignPatterns(): void;
-declare function getNestedProperty<T, K extends keyof T>(obj: T, key: K): T[K];
+declare function demonstrateRecursiveTypes(): void;
+type Brand<T, U> = T & {
+    readonly _brand: U;
+};
+type UserId = Brand<number, "UserId">;
+type ProductId = Brand<number, "ProductId">;
+declare function createUserId(id: number): UserId;
+declare function createProductId(id: number): ProductId;
+declare function getUser(id: UserId): string;
+declare function getProduct(id: ProductId): string;
 /**
- * TypeScript型チャレンジの使用例を示す
+ * 型レベルでのパフォーマンス最適化の使用例を示す
  */
-declare function demonstrateTypeChallenges(): void;
+declare function demonstratePerformanceOptimization(): void;
 /**
  * 結果をHTMLページに表示するヘルパー関数
  */
@@ -165,3 +160,7 @@ declare function displayResult3(resultId: string, content: string): void;
  * コンソールログをキャプチャして文字列として返すヘルパー関数
  */
 declare function captureConsoleOutput3(fn: () => void): string;
+/**
+ * 非同期関数用のコンソールログキャプチャ関数
+ */
+declare function captureAsyncOutput(fn: () => Promise<void>): Promise<string>;

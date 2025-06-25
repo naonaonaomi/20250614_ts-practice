@@ -47,7 +47,7 @@ let user: { name: string; email?: string } = {
 };
 user.email = "yamada@example.com";
 
-console.log("人物:", person, "ユーザー:", user);</code></pre>
+console.log("人物:", JSON.stringify(person), "ユーザー:", JSON.stringify(user));</code></pre>
       <button id="btn2">実行してみる</button>
       <div class="result" id="result2"></div>
     </section>
@@ -100,8 +100,8 @@ function updateStatus(user: User, newStatus: Status): User {
     return { ...user, status: newStatus };
 }
 
-console.log("元:", currentUser);
-console.log("更新後:", updateStatus(currentUser, "completed"));</code></pre>
+console.log("元:", JSON.stringify(currentUser));
+console.log("更新後:", JSON.stringify(updateStatus(currentUser, "completed")));</code></pre>
       <button id="btn5">実行してみる</button>
       <div class="result" id="result5"></div>
     </section>
@@ -161,7 +161,7 @@ const user = { name: "佐藤", age: 25, isActive: true };
 
 console.log("推論:", inferredString, inferredNumber);
 console.log("明示:", explicitString, explicitArray);
-console.log("オブジェクト推論:", user);</code></pre>
+console.log("オブジェクト推論:", JSON.stringify(user));</code></pre>
       <button id="btn8">実行してみる</button>
       <div class="result" id="result8"></div>
     </section>

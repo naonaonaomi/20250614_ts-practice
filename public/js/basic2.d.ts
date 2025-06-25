@@ -10,7 +10,6 @@ interface BasicUser {
 }
 interface Calculator {
     add(a: number, b: number): number;
-    subtract(a: number, b: number): number;
     multiply(a: number, b: number): number;
 }
 interface Flyable {
@@ -53,11 +52,10 @@ declare function demonstrateInterface(): void;
  */
 declare function demonstrateInterfaceWithMethods(): void;
 declare class Animal {
+    age: number;
     private name;
     protected species: string;
-    age: number;
     constructor(name: string, species: string, age: number);
-    getName(): string;
     getInfo(): string;
 }
 /**
@@ -82,13 +80,12 @@ declare class Car extends Vehicle {
  */
 declare function demonstrateInheritance(): void;
 declare class Duck implements Flyable, Swimmable {
+    private name;
     altitude: number;
     depth: number;
-    private name;
     constructor(name: string);
     fly(): void;
     swim(): void;
-    walk(): void;
 }
 /**
  * InterfaceとClassの組み合わせの使用例を示す
@@ -104,7 +101,6 @@ declare class Box<T> {
     constructor(value: T);
     getValue(): T;
     setValue(value: T): void;
-    getType(): string;
 }
 /**
  * ジェネリッククラスの使用例を示す

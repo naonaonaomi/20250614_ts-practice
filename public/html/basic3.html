@@ -15,7 +15,7 @@
   </header>
   <main>
     <section id="conditional-types">
-      <h2>1. Conditional Types（条件付き型）</h2>
+      <h2>19. Conditional Types（条件付き型）</h2>
       <p>型の条件分岐を使った高度な型操作を学びます。</p>
       <pre><code>type IsString&lt;T&gt; = T extends string ? "文字列です" : "文字列ではありません";
 type ElementType&lt;T&gt; = T extends (infer U)[] ? U : never;
@@ -35,7 +35,7 @@ console.log("配列例:", [1, 2, 3], ["a", "b"]);</code></pre>
     </section>
 
     <section id="template-literal">
-      <h2>2. Template Literal Types</h2>
+      <h2>20. Template Literal Types</h2>
       <p>文字列テンプレートを型レベルで操作する方法を学びます。</p>
       <pre><code>type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
 type APICall = `${HTTPMethod} /api/${string}`;
@@ -55,7 +55,7 @@ console.log("CSS プロパティ例:", cssProperties);</code></pre>
     </section>
 
     <section id="mapped-advanced">
-      <h2>3. 高度なMapped Types</h2>
+      <h2>21. 高度なMapped Types</h2>
       <p>より複雑な型変換パターンを学びます。</p>
       <pre><code>interface User { id: number; name: string; email: string; isActive: boolean; }
 
@@ -77,7 +77,7 @@ console.log("文字列プロパティ:", stringProps);</code></pre>
     </section>
 
     <section id="discriminated-unions">
-      <h2>4. Discriminated Unions（判別可能なユニオン型）</h2>
+      <h2>22. Discriminated Unions（判別可能なユニオン型）</h2>
       <p>型安全な条件分岐を実現する判別可能なユニオン型を学びます。</p>
       <pre><code>interface LoadingState { status: "loading"; progress: number; }
 interface SuccessState { status: "success"; data: string; }
@@ -106,7 +106,7 @@ states.forEach((state, index) => console.log(`状態 ${index + 1}:`, handleAsync
     </section>
 
     <section id="type-guards">
-      <h2>5. Type Guards（型ガード）</h2>
+      <h2>23. Type Guards（型ガード）</h2>
       <p>実行時に型を安全に絞り込む方法を学びます。</p>
       <pre><code>interface Dog { type: "dog"; bark(): void; }
 interface Cat { type: "cat"; meow(): void; }
@@ -132,7 +132,7 @@ makeSound(cat);</code></pre>
     </section>
 
     <section id="decorators">
-      <h2>6. Decorators（デコレータ）</h2>
+      <h2>24. Decorators（デコレータ）</h2>
       <p>クラスやメソッドに横断的な機能を追加する方法を学びます。</p>
       <pre><code>function withLogging&lt;T extends (...args: any[]) => any&gt;(fn: T): T {
     return ((...args: any[]) => {
@@ -163,7 +163,7 @@ timedAdd(10, 20);</code></pre>
     </section>
 
     <section id="modules-namespaces">
-      <h2>7. Modules と Namespaces</h2>
+      <h2>25. Modules と Namespaces</h2>
       <p>コードの組織化とモジュールシステムを学びます。</p>
       <pre><code>namespace MathUtils {
     export function add(a: number, b: number): number { return a + b; }
@@ -188,7 +188,7 @@ console.log("Module:", StringUtils.capitalize("hello"), "使用回数:", StringU
     </section>
 
     <section id="async-types">
-      <h2>8. 非同期処理の型安全性</h2>
+      <h2>26. 非同期処理の型安全性</h2>
       <p>Promise、async/awaitとTypeScriptの型システムを組み合わせる方法を学びます。</p>
       <pre><code>interface UserData { id: number; name: string; email: string; }
 interface ApiResponse&lt;T&gt; { success: boolean; data?: T; error?: string; }
@@ -222,7 +222,7 @@ demonstrateAsyncTypes();</code></pre>
     </section>
 
     <section id="recursive-types">
-      <h2>9. 再帰的型とAdvanced Types</h2>
+      <h2>27. 再帰的型とAdvanced Types</h2>
       <p>再帰的な型定義と高度な型操作を学びます。</p>
       <pre><code>type DeepReadonly&lt;T&gt; = {
     readonly [P in keyof T]: T[P] extends object ? DeepReadonly&lt;T[P]&gt; : T[P];
@@ -258,7 +258,7 @@ console.log("配列チェック:", true, false);</code></pre>
     </section>
 
     <section id="performance-optimization">
-      <h2>10. 型レベルでのパフォーマンス最適化</h2>
+      <h2>28. 型レベルでのパフォーマンス最適化</h2>
       <p>TypeScriptの型システムを使ったコンパイル時最適化とパフォーマンス向上を学びます。</p>
       <pre><code>type Brand&lt;T, U&gt; = T & { readonly _brand: U };
 type UserId = Brand&lt;number, "UserId"&gt;;

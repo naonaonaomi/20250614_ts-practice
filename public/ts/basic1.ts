@@ -24,25 +24,13 @@ type BasicUserType = {
  * 基本的なプリミティブ型の使用例を示す
  */
 function demonstrateBasicTypes(): void {
-    // 数値型
     let age: number = 25;
-    console.log("年齢:", age);
-
-    // 文字列型
     let name: string = "田中太郎";
-    console.log("名前:", name);
-
-    // 真偽値型
     let isStudent: boolean = true;
-    console.log("学生か:", isStudent);
-
-    // 配列型（推奨記法）
     let colors: string[] = ["赤", "青", "緑"];
-    console.log("色配列:", colors);
 
-    // 数値配列（ジェネリック記法）
-    let scores: Array<number> = [85, 90, 78];
-    console.log("得点配列:", scores);
+    console.log("年齢:", age, "名前:", name);
+    console.log("学生:", isStudent, "色:", colors);
 }
 
 // ===================================
@@ -54,23 +42,17 @@ function demonstrateBasicTypes(): void {
  */
 function demonstrateObjectTypes(): void {
     // オブジェクト型の定義（インライン型）
-    let person: { name: string; age: number; isActive: boolean } = {
-        name: "佐藤花子",
-        age: 30,
-        isActive: true
+    let person: { name: string; age: number } = {
+        name: "佐藤花子", age: 30
     };
-    console.log("人物情報:", person);
 
     // オプショナルプロパティ
     let user: { name: string; email?: string } = {
         name: "山田太郎"
-        // emailは省略可能
     };
-    console.log("ユーザー情報:", user);
-
-    // 後でemailを追加
     user.email = "yamada@example.com";
-    console.log("email追加後:", user);
+
+    console.log("人物:", JSON.stringify(person), "ユーザー:", JSON.stringify(user));
 }
 
 // ===================================
@@ -81,25 +63,16 @@ function demonstrateObjectTypes(): void {
  * 関数の型注釈とオプション引数の使用例を示す
  */
 function demonstrateFunctionTypes(): void {
-    // 関数の型注釈
     function add(x: number, y: number): number {
         return x + y;
     }
-    console.log("5 + 3 =", add(5, 3));
 
-    // アロー関数の型注釈
-    const multiply = (x: number, y: number): number => x * y;
-    console.log("4 × 6 =", multiply(4, 6));
-
-    // オプション引数
     function greet(name: string, title?: string): string {
-        if (title) {
-            return `こんにちは、${title}${name}さん！`;
-        }
-        return `こんにちは、${name}さん！`;
+        return title ? `こんにちは、${title}${name}さん！` : `こんにちは、${name}さん！`;
     }
-    console.log(greet("田中"));
-    console.log(greet("佐藤", "先生"));
+
+    console.log("5 + 3 =", add(5, 3));
+    console.log(greet("田中"), greet("佐藤", "さん"));
 }
 
 // ===================================
@@ -110,25 +83,15 @@ function demonstrateFunctionTypes(): void {
  * Union型（複数の型の組み合わせ）の使用例を示す
  */
 function demonstrateUnionTypes(): void {
-    // Union型（複数の型のいずれか）
     let id: number | string;
-
     id = 123;
-    console.log("数値のID:", id);
-
     id = "USER001";
-    console.log("文字列のID:", id);
 
-    // 関数でのUnion型使用
     function formatId(id: number | string): string {
-        if (typeof id === "number") {
-            return `ID: ${id.toString().padStart(6, "0")}`;
-        } else {
-            return `ID: ${id.toUpperCase()}`;
-        }
+        return typeof id === "number" ? `ID: ${id.toString().padStart(6, "0")}` : `ID: ${id.toUpperCase()}`;
     }
-    console.log(formatId(42));
-    console.log(formatId("abc123"));
+
+    console.log(formatId(42), formatId("abc123"));
 }
 
 // ===================================
@@ -139,21 +102,14 @@ function demonstrateUnionTypes(): void {
  * 型エイリアスを使った型の再利用例を示す
  */
 function demonstrateTypeAliases(): void {
-    // 型エイリアスの使用
-    let currentUser: BasicUserType = {
-        id: 1,
-        name: "鈴木一郎",
-        status: "pending"
-    };
-    console.log("ユーザー:", JSON.stringify(currentUser, null, 2));
+    let currentUser: BasicUserType = { id: 1, name: "鈴木一郎", status: "pending" };
 
-    // 型安全な関数
     function updateStatus(user: BasicUserType, newStatus: Status): BasicUserType {
         return { ...user, status: newStatus };
     }
 
-    let updatedUser = updateStatus(currentUser, "completed");
-    console.log("更新後:", JSON.stringify(updatedUser, null, 2));
+    console.log("元:", JSON.stringify(currentUser));
+    console.log("更新後:", JSON.stringify(updateStatus(currentUser, "completed")));
 }
 
 // ===================================
@@ -164,24 +120,16 @@ function demonstrateTypeAliases(): void {
  * 配列型とタプル型の使用例を示す
  */
 function demonstrateArraysAndTuples(): void {
-    // 配列型
-    let numbers: number[] = [1, 2, 3, 4, 5];
-    console.log("数値配列:", numbers);
+    let numbers: number[] = [1, 2, 3];
 
-    // タプル型（固定長・型が決まった配列）
     let coordinate: [number, number] = [10, 20];
-    console.log("座標:", coordinate);
-    console.log("X座標:", coordinate[0]);
-    console.log("Y座標:", coordinate[1]);
+    let person: [string, number] = ["田中太郎", 25];
 
-    // ラベル付きタプル
-    let person: [name: string, age: number, isActive: boolean] = 
-        ["田中太郎", 25, true];
-    console.log("人物タプル:", person);
+    let fruits = ["りんご", "バナナ"];
 
-    // 配列の型推論
-    let fruits = ["りんご", "バナナ", "オレンジ"];  // string[]として推論
-    console.log("果物配列:", fruits);
+    console.log("数値配列:", numbers);
+    console.log("座標:", coordinate, "人物:", person);
+    console.log("果物:", fruits);
 }
 
 // ===================================
@@ -192,38 +140,21 @@ function demonstrateArraysAndTuples(): void {
  * TypeScriptの特殊な型（never, any, unknown）の使用例を示す
  */
 function demonstrateSpecialTypes(): void {
-    // any型（型チェックを無効にする）
     let anyValue: any = 42;
     anyValue = "文字列";
-    anyValue = true;
-    console.log("any型の値:", anyValue);
 
-    // unknown型（安全なany）
     let unknownValue: unknown = "何かの値";
-    console.log("unknown型の値:", unknownValue);
-
-    // unknown型は型チェックが必要
     if (typeof unknownValue === "string") {
         console.log("文字列として処理:", unknownValue.toUpperCase());
     }
 
-    // never型を返す関数（例外を投げる）
-    function throwError(message: string): never {
-        throw new Error(message);
+    function processValue(value: string | number): string {
+        if (typeof value === "string") return value.toUpperCase();
+        if (typeof value === "number") return value.toString();
+        throw new Error("予期しない型");
     }
 
-    // 実際の使用例
-    function processValue(value: string | number): string {
-        if (typeof value === "string") {
-            return value.toUpperCase();
-        } else if (typeof value === "number") {
-            return value.toString();
-        } else {
-            // この部分は到達しないはず（never型）
-            return throwError("予期しない型です");
-        }
-    }
-    console.log("処理結果:", processValue("hello"));
+    console.log("any:", anyValue, "処理結果:", processValue("hello"));
 }
 
 // ===================================
@@ -234,34 +165,17 @@ function demonstrateSpecialTypes(): void {
  * 型注釈と型推論の違いと使い分けを示す
  */
 function demonstrateTypeAnnotationVsInference(): void {
-    // 型推論（TypeScriptが自動で型を決定）
-    let inferredString = "これは文字列";  // string型として推論
-    let inferredNumber = 42;             // number型として推論
-    let inferredArray = [1, 2, 3];       // number[]として推論
+    let inferredString = "これは文字列";
+    let inferredNumber = 42;
 
-    console.log("推論された型の例:");
-    console.log("文字列:", inferredString);
-    console.log("数値:", inferredNumber);
-    console.log("配列:", inferredArray);
+    let explicitString: string = "明示的に指定";
+    let explicitArray: string[] = ["a", "b"];
 
-    // 明示的な型注釈
-    let explicitString: string = "明示的に指定した文字列";
-    let explicitNumber: number = 100;
-    let explicitArray: string[] = ["a", "b", "c"];
+    const user = { name: "佐藤", age: 25, isActive: true };
 
-    console.log("明示的な型の例:");
-    console.log("文字列:", explicitString);
-    console.log("数値:", explicitNumber);
-    console.log("配列:", explicitArray);
-
-    // 型推論が役立つ例
-    const user = {
-        name: "佐藤",
-        age: 25,
-        isActive: true
-    };
-    // userは自動で { name: string; age: number; isActive: boolean; } 型として推論
-    console.log("推論されたオブジェクト:", user);
+    console.log("推論:", inferredString, inferredNumber);
+    console.log("明示:", explicitString, explicitArray);
+    console.log("オブジェクト推論:", JSON.stringify(user));
 }
 
 // ===================================

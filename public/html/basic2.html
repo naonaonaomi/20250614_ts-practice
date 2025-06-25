@@ -15,7 +15,7 @@
   </header>
   <main>
     <section id="interface-basic">
-      <h2>1. Interface（インターフェース）</h2>
+      <h2>9. Interface（インターフェース）</h2>
       <p>オブジェクトの構造を定義する方法を学びます。</p>
       <pre><code>interface User {
     id: number;
@@ -34,7 +34,7 @@ console.log("ユーザー2:", user2);</code></pre>
     </section>
 
     <section id="interface-method">
-      <h2>2. メソッドを持つInterface</h2>
+      <h2>10. メソッドを持つInterface</h2>
       <p>インターフェースにメソッドを定義する方法を学びます。</p>
       <pre><code>interface Calculator {
     add(a: number, b: number): number;
@@ -53,7 +53,7 @@ calculator.multiply(6, 7);</code></pre>
     </section>
 
     <section id="class-basic">
-      <h2>3. Class（クラス）</h2>
+      <h2>11. Class（クラス）</h2>
       <p>TypeScriptのクラス定義と型安全性を学びます。</p>
       <pre><code>class Animal {
     private name: string;
@@ -77,7 +77,7 @@ console.log(dog.getInfo());</code></pre>
     </section>
 
     <section id="class-inheritance">
-      <h2>4. クラスの継承</h2>
+      <h2>12. クラスの継承</h2>
       <p>継承とポリモーフィズムを学びます。</p>
       <pre><code>class Vehicle {
     constructor(protected brand: string, protected model: string) {}
@@ -103,7 +103,7 @@ car.drive();</code></pre>
     </section>
 
     <section id="interface-class">
-      <h2>5. InterfaceとClassの組み合わせ</h2>
+      <h2>13. InterfaceとClassの組み合わせ</h2>
       <p>インターフェースを実装するクラスの作成方法を学びます。</p>
       <pre><code>interface Flyable { fly(): void; altitude: number; }
 interface Swimmable { swim(): void; depth: number; }
@@ -133,7 +133,7 @@ duck.swim();</code></pre>
     </section>
 
     <section id="generics-basic">
-      <h2>6. Generics（ジェネリクス）基礎</h2>
+      <h2>14. Generics（ジェネリクス）基礎</h2>
       <p>型パラメータを使って再利用可能なコードを書く方法を学びます。</p>
       <pre><code>function identity&lt;T&gt;(arg: T): T {
     console.log("型:", typeof arg, "値:", arg);
@@ -150,7 +150,7 @@ console.log("文字列結果:", stringResult);</code></pre>
     </section>
 
     <section id="generics-class">
-      <h2>7. ジェネリッククラス</h2>
+      <h2>15. ジェネリッククラス</h2>
       <p>型パラメータを持つクラスの作成方法を学びます。</p>
       <pre><code>class Box&lt;T&gt; {
     constructor(private value: T) {
@@ -172,7 +172,7 @@ numberBox.setValue(100);</code></pre>
     </section>
 
     <section id="generics-constraints">
-      <h2>8. ジェネリック制約</h2>
+      <h2>16. ジェネリック制約</h2>
       <p>ジェネリックに制約を設ける方法を学びます。</p>
       <pre><code>interface Lengthwise { length: number; }
 
@@ -196,7 +196,7 @@ console.log("年齢:", getProperty(person, "age"));</code></pre>
     </section>
 
     <section id="utility-types">
-      <h2>9. ユーティリティ型</h2>
+      <h2>17. ユーティリティ型</h2>
       <p>TypeScriptの便利な組み込みユーティリティ型を学びます。</p>
       <pre><code>interface User { id: number; name: string; email: string; isActive: boolean; }
 
@@ -214,7 +214,7 @@ console.log("新規:", newUser);</code></pre>
     </section>
 
     <section id="mapped-types">
-      <h2>10. Mapped Types（マップド型）</h2>
+      <h2>18. Mapped Types（マップド型）</h2>
       <p>既存の型を変換して新しい型を作る方法を学びます。</p>
       <pre><code>interface User { name: string; age: number; email: string; }
 

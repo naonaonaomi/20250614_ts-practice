@@ -18,9 +18,7 @@ type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
 type APIEndpoint = `/api/${string}`;
 type APICall = `${HTTPMethod} ${APIEndpoint}`;
 
-type CSSProperty = "margin" | "padding" | "border";
-type CSSDirection = "top" | "right" | "bottom" | "left";
-type CSSPropertyWithDirection = `${CSSProperty}-${CSSDirection}`;
+type CSSProperty = `${"margin" | "padding"}-${"top" | "left"}`;
 
 // セクション21で使用する型
 interface User {
@@ -131,22 +129,12 @@ function checkType<T>(value: T): IsString<T> {
  * Conditional Typesの使用例を示す
  */
 function demonstrateConditionalTypes(): void {
-
-
-    // 実行時の動作例
     const stringResult = checkType("hello");
-    console.log("文字列の場合:", stringResult);
-
     const numberResult = checkType(42);
+
+    console.log("文字列の場合:", stringResult);
     console.log("数値の場合:", numberResult);
-
-    // 配列から要素の型を抽出（概念的に）
-    const numbers = [1, 2, 3];
-    const strings = ["a", "b", "c"];
-
-    console.log("配列の要素:");
-    console.log("数値配列:", numbers);
-    console.log("文字列配列:", strings);
+    console.log("配列例:", [1, 2, 3], ["a", "b"]);
 }
 
 // ===================================
@@ -161,21 +149,10 @@ function makeAPICall(endpoint: APICall): void {
  * Template Literal Typesの使用例を示す
  */
 function demonstrateTemplateLiteralTypes(): void {
-
-    
-    // 型安全なAPI呼び出し例
     makeAPICall("GET /api/users");
     makeAPICall("POST /api/users");
-    makeAPICall("PUT /api/users/123");
-    makeAPICall("DELETE /api/users/123");
 
-    // 文字列操作の実用例
-    const cssProperties: CSSPropertyWithDirection[] = [
-        "margin-top",
-        "padding-left",
-        "border-bottom"
-    ];
-
+    const cssProperties: CSSProperty[] = ["margin-top", "padding-left"];
     console.log("CSS プロパティ例:", cssProperties);
 }
 
@@ -409,26 +386,15 @@ function demonstrateModulesAndNamespaces(): void {
 // セクション26: 非同期処理とPromise型
 // ===================================
 
-async function fetchUser(id: number): Promise<ApiResponse<UserData>> {
-    // 模擬的なAPI呼び出し
+function fetchUser(id: number): Promise<ApiResponse<UserData>> {
     return new Promise((resolve) => {
         setTimeout(() => {
-            if (id === 1) {
-                resolve({
-                    success: true,
-                    data: {
-                        id: 1,
-                        name: "田中太郎",
-                        email: "tanaka@example.com"
-                    }
-                });
+            if (id > 0) {
+                resolve({ success: true, data: { id, name: `ユーザー${id}`, email: `user${id}@example.com` } });
             } else {
-                resolve({
-                    success: false,
-                    error: "ユーザーが見つかりません"
-                });
+                resolve({ success: false, error: "無効なユーザーID" });
             }
-        }, 100);
+        }, 1000);
     });
 }
 
@@ -436,136 +402,69 @@ async function fetchUser(id: number): Promise<ApiResponse<UserData>> {
  * 非同期処理とPromise型の使用例を示す
  */
 async function demonstrateAsyncTypes(): Promise<void> {
-
+    console.log("ユーザー取得開始...");
     
-    try {
-        console.log("ユーザー取得開始...");
-        
-        const result1 = await fetchUser(1);
-        if (result1.success) {
-            console.log("ユーザー1取得成功:", result1.data);
-        } else {
-            console.log("ユーザー1取得失敗:", result1.error);
-        }
-
-        const result2 = await fetchUser(999);
-        if (result2.success) {
-            console.log("ユーザー999取得成功:", result2.data);
-        } else {
-            console.log("ユーザー999取得失敗:", result2.error);
-        }
-    } catch (error) {
-        console.error("エラーが発生しました:", error);
+    const response = await fetchUser(1);
+    if (response.success && response.data) {
+        console.log("取得成功:", JSON.stringify(response.data));
+    } else {
+        console.log("取得失敗:", response.error);
     }
 }
 
 // ===================================
-// セクション27: デザインパターン
+// セクション27: 再帰的型とAdvanced Types
 // ===================================
-
-class UserBuilder {
-    private user: Partial<UserData> = {};
-
-    setId(id: number): UserBuilder {
-        this.user.id = id;
-        return this;
-    }
-
-    setName(name: string): UserBuilder {
-        this.user.name = name;
-        return this;
-    }
-
-    setEmail(email: string): UserBuilder {
-        this.user.email = email;
-        return this;
-    }
-
-    build(): UserData {
-        if (!this.user.id || !this.user.name || !this.user.email) {
-            throw new Error("必須プロパティが不足しています");
-        }
-        return this.user as UserData;
-    }
-}
-
-class UserFactory {
-    static createAdmin(name: string): UserData {
-        return {
-            id: Math.floor(Math.random() * 1000),
-            name: `【管理者】${name}`,
-            email: `admin.${name.toLowerCase()}@company.com`
-        };
-    }
-
-    static createGuest(): UserData {
-        return {
-            id: 0,
-            name: "ゲストユーザー",
-            email: "guest@example.com"
-        };
-    }
-}
 
 /**
- * デザインパターンの使用例を示す
+ * 再帰的型とAdvanced Typesの使用例を示す
  */
-function demonstrateDesignPatterns(): void {
-
-    
-    // Builderパターン
-    const user1 = new UserBuilder()
-        .setId(1)
-        .setName("田中太郎")
-        .setEmail("tanaka@example.com")
-        .build();
-
-    // Factoryパターン
-    const admin = UserFactory.createAdmin("管理者");
-    const guest = UserFactory.createGuest();
-
-    console.log("ビルダーで作成:", user1);
-    console.log("ファクトリで作成（管理者）:", admin);
-    console.log("ファクトリで作成（ゲスト）:", guest);
-}
-
-// ===================================
-// セクション28: TypeScript型チャレンジ
-// ===================================
-
-function getNestedProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
-    return obj[key];
-}
-
-/**
- * TypeScript型チャレンジの使用例を示す
- */
-function demonstrateTypeChallenges(): void {
-
-    
-    // 実用例
+function demonstrateRecursiveTypes(): void {
     const nestedUser: NestedUser = {
         id: 1,
         profile: {
             name: "田中太郎",
-            contact: {
-                email: "tanaka@example.com",
-                phone: "090-1234-5678"
-            }
+            contact: { email: "tanaka@example.com", phone: "090-1234-5678" }
         },
-        preferences: {
-            theme: "dark",
-            language: "ja"
-        }
+        preferences: { theme: "dark", language: "ja" }
     };
 
-    console.log("ネストしたオブジェクトの例:");
-    console.log("ユーザー:", nestedUser);
-    console.log("プロフィール:", getNestedProperty(nestedUser, "profile"));
-    console.log("名前:", nestedUser.profile.name);
-    console.log("メール:", nestedUser.profile.contact.email);
+    const readonlyNestedUser: DeepReadonly<NestedUser> = nestedUser;
 
-    console.log("型レベルでの配列チェック例を実装しました");
+    console.log("ネストしたユーザー:", JSON.stringify(nestedUser));
+    console.log("読み取り専用:", JSON.stringify(readonlyNestedUser));
+    console.log("配列チェック:", true, false);
+}
+
+// ===================================
+// セクション28: 型レベルでのパフォーマンス最適化
+// ===================================
+
+type Brand<T, U> = T & { readonly _brand: U };
+type UserId = Brand<number, "UserId">;
+type ProductId = Brand<number, "ProductId">;
+
+function createUserId(id: number): UserId { return id as UserId; }
+function createProductId(id: number): ProductId { return id as ProductId; }
+
+function getUser(id: UserId): string { return `ユーザー${id}`; }
+function getProduct(id: ProductId): string { return `商品${id}`; }
+
+/**
+ * 型レベルでのパフォーマンス最適化の使用例を示す
+ */
+function demonstratePerformanceOptimization(): void {
+    const userId = createUserId(123);
+    const productId = createProductId(456);
+
+    console.log(getUser(userId));
+    console.log(getProduct(productId));
+
+    interface Cache<T> { [key: string]: T; }
+    const userCache: Cache<string> = {};
+    userCache["user1"] = "田中太郎";
+
+    console.log("キャッシュ:", JSON.stringify(userCache));
 }
 
 // ===================================
@@ -608,6 +507,27 @@ function captureConsoleOutput3(fn: () => void): string {
 }
 
 /**
+ * 非同期関数用のコンソールログキャプチャ関数
+ */
+async function captureAsyncOutput(fn: () => Promise<void>): Promise<string> {
+    const originalLog = console.log;
+    let output = '';
+    
+    console.log = (...args: any[]) => {
+        output += args.join(' ') + '\n';
+        originalLog.apply(console, args);
+    };
+    
+    try {
+        await fn();
+    } finally {
+        console.log = originalLog;
+    }
+    
+    return output;
+}
+
+/**
  * DOMが読み込まれた後にイベントリスナーを設定
  */
 document.addEventListener('DOMContentLoaded', () => {
@@ -619,10 +539,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnUnions: document.getElementById('btn-unions'),
         btnGuards: document.getElementById('btn-guards'),
         btnDecorators: document.getElementById('btn-decorators'),
-        btnModules: document.getElementById('btn-modules'),
-        btnAsyncTypes: document.getElementById('btn-async-types'),
-        btnPatterns: document.getElementById('btn-patterns'),
-        btnChallenges: document.getElementById('btn-challenges')
+        btnModules: document.getElementById('btn-modules')
     };
 
     // 各ボタンのイベントリスナー設定
@@ -661,31 +578,34 @@ document.addEventListener('DOMContentLoaded', () => {
         displayResult3('result-modules', output);
     });
 
-    buttons.btnAsyncTypes?.addEventListener('click', async () => {
-        const output = await new Promise<string>((resolve) => {
-            const originalLog = console.log;
-            let output = '';
-            
-            console.log = (...args: any[]) => {
-                output += args.join(' ') + '\n';
-                originalLog.apply(console, args);
-            };
-            
-            demonstrateAsyncTypes().then(() => {
-                console.log = originalLog;
-                resolve(output);
-            });
-        });
-        displayResult3('result-async-types', output);
+    const btnAsync = document.getElementById('btn-async');
+    btnAsync?.addEventListener('click', async () => {
+        const originalLog = console.log;
+        let output = '';
+        
+        console.log = (...args: any[]) => {
+            output += args.join(' ') + '\n';
+            originalLog.apply(console, args);
+        };
+        
+        try {
+            await demonstrateAsyncTypes();
+        } finally {
+            console.log = originalLog;
+        }
+        
+        displayResult3('result-async', output);
     });
 
-    buttons.btnPatterns?.addEventListener('click', () => {
-        const output = captureConsoleOutput3(() => demonstrateDesignPatterns());
-        displayResult3('result-patterns', output);
+    const btnRecursive = document.getElementById('btn-recursive');
+    btnRecursive?.addEventListener('click', () => {
+        const output = captureConsoleOutput3(() => demonstrateRecursiveTypes());
+        displayResult3('result-recursive', output);
     });
 
-    buttons.btnChallenges?.addEventListener('click', () => {
-        const output = captureConsoleOutput3(() => demonstrateTypeChallenges());
-        displayResult3('result-challenges', output);
+    const btnPerformance = document.getElementById('btn-performance');
+    btnPerformance?.addEventListener('click', () => {
+        const output = captureConsoleOutput3(() => demonstratePerformanceOptimization());
+        displayResult3('result-performance', output);
     });
 }); 
