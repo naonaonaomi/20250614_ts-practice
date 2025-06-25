@@ -438,7 +438,40 @@ function demonstrateMappedTypes(): void {
 // DOM操作・イベント処理セクション
 // ===================================
 
-import { displayResult, captureConsoleOutput } from './utils.js';
+/**
+ * 結果をHTMLページに表示するヘルパー関数
+ */
+function displayResult2(resultId: string, content: string): void {
+    const resultDiv = document.getElementById(resultId);
+    if (resultDiv) {
+        resultDiv.innerHTML = `<div>${content}</div>`;
+        resultDiv.style.padding = '10px';
+        resultDiv.style.marginTop = '10px';
+        resultDiv.style.whiteSpace = 'pre-wrap';
+        resultDiv.style.fontFamily = 'monospace';
+    }
+}
+
+/**
+ * コンソールログをキャプチャして文字列として返すヘルパー関数
+ */
+function captureConsoleOutput2(fn: () => void): string {
+    const originalLog = console.log;
+    let output = '';
+    
+    console.log = (...args: any[]) => {
+        output += args.join(' ') + '\n';
+        originalLog.apply(console, args);
+    };
+    
+    try {
+        fn();
+    } finally {
+        console.log = originalLog;
+    }
+    
+    return output;
+}
 
 /**
  * DOMが読み込まれた後にイベントリスナーを設定
@@ -460,52 +493,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 各ボタンのイベントリスナー設定
     buttons.btnInterface?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateInterface());
-        displayResult('result-interface', output);
+        const output = captureConsoleOutput2(() => demonstrateInterface());
+        displayResult2('result-interface', output);
     });
 
     buttons.btnInterfaceMethod?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateInterfaceWithMethods());
-        displayResult('result-interface-method', output);
+        const output = captureConsoleOutput2(() => demonstrateInterfaceWithMethods());
+        displayResult2('result-interface-method', output);
     });
 
     buttons.btnClass?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateClass());
-        displayResult('result-class', output);
+        const output = captureConsoleOutput2(() => demonstrateClass());
+        displayResult2('result-class', output);
     });
 
     buttons.btnInheritance?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateInheritance());
-        displayResult('result-inheritance', output);
+        const output = captureConsoleOutput2(() => demonstrateInheritance());
+        displayResult2('result-inheritance', output);
     });
 
     buttons.btnInterfaceClass?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateInterfaceAndClass());
-        displayResult('result-interface-class', output);
+        const output = captureConsoleOutput2(() => demonstrateInterfaceAndClass());
+        displayResult2('result-interface-class', output);
     });
 
     buttons.btnGenerics?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateGenerics());
-        displayResult('result-generics', output);
+        const output = captureConsoleOutput2(() => demonstrateGenerics());
+        displayResult2('result-generics', output);
     });
 
     buttons.btnGenericsClass?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateGenericClass());
-        displayResult('result-generics-class', output);
+        const output = captureConsoleOutput2(() => demonstrateGenericClass());
+        displayResult2('result-generics-class', output);
     });
 
     buttons.btnConstraints?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateGenericConstraints());
-        displayResult('result-constraints', output);
+        const output = captureConsoleOutput2(() => demonstrateGenericConstraints());
+        displayResult2('result-constraints', output);
     });
 
     buttons.btnUtility?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateUtilityTypes());
-        displayResult('result-utility', output);
+        const output = captureConsoleOutput2(() => demonstrateUtilityTypes());
+        displayResult2('result-utility', output);
     });
 
     buttons.btnMapped?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateMappedTypes());
-        displayResult('result-mapped', output);
+        const output = captureConsoleOutput2(() => demonstrateMappedTypes());
+        displayResult2('result-mapped', output);
     });
-});  
+}); 

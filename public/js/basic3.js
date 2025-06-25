@@ -1,3 +1,4 @@
+"use strict";
 /**
  * TypeScript上級編のサンプルコード
  * 条件付き型、Template Literal Types、高度なMapped Types、非同期処理の使用方法を学習
@@ -388,7 +389,37 @@ function demonstrateTypeChallenges() {
 // ===================================
 // DOM操作・イベント処理セクション
 // ===================================
-import { displayResult, captureConsoleOutput, captureAsyncConsoleOutput } from './utils.js';
+/**
+ * 結果をHTMLページに表示するヘルパー関数
+ */
+function displayResult3(resultId, content) {
+    const resultDiv = document.getElementById(resultId);
+    if (resultDiv) {
+        resultDiv.innerHTML = `<div>${content}</div>`;
+        resultDiv.style.padding = '10px';
+        resultDiv.style.marginTop = '10px';
+        resultDiv.style.whiteSpace = 'pre-wrap';
+        resultDiv.style.fontFamily = 'monospace';
+    }
+}
+/**
+ * コンソールログをキャプチャして文字列として返すヘルパー関数
+ */
+function captureConsoleOutput3(fn) {
+    const originalLog = console.log;
+    let output = '';
+    console.log = (...args) => {
+        output += args.join(' ') + '\n';
+        originalLog.apply(console, args);
+    };
+    try {
+        fn();
+    }
+    finally {
+        console.log = originalLog;
+    }
+    return output;
+}
 /**
  * DOMが読み込まれた後にイベントリスナーを設定
  */
@@ -408,44 +439,55 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     // 各ボタンのイベントリスナー設定
     buttons.btnConditional?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateConditionalTypes());
-        displayResult('result-conditional', output);
+        const output = captureConsoleOutput3(() => demonstrateConditionalTypes());
+        displayResult3('result-conditional', output);
     });
     buttons.btnTemplate?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateTemplateLiteralTypes());
-        displayResult('result-template', output);
+        const output = captureConsoleOutput3(() => demonstrateTemplateLiteralTypes());
+        displayResult3('result-template', output);
     });
     buttons.btnMappedAdvanced?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateAdvancedMappedTypes());
-        displayResult('result-mapped-advanced', output);
+        const output = captureConsoleOutput3(() => demonstrateAdvancedMappedTypes());
+        displayResult3('result-mapped-advanced', output);
     });
     buttons.btnUnions?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateDiscriminatedUnions());
-        displayResult('result-unions', output);
+        const output = captureConsoleOutput3(() => demonstrateDiscriminatedUnions());
+        displayResult3('result-unions', output);
     });
     buttons.btnGuards?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateTypeGuards());
-        displayResult('result-guards', output);
+        const output = captureConsoleOutput3(() => demonstrateTypeGuards());
+        displayResult3('result-guards', output);
     });
     buttons.btnDecorators?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateDecorators());
-        displayResult('result-decorators', output);
+        const output = captureConsoleOutput3(() => demonstrateDecorators());
+        displayResult3('result-decorators', output);
     });
     buttons.btnModules?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateModulesAndNamespaces());
-        displayResult('result-modules', output);
+        const output = captureConsoleOutput3(() => demonstrateModulesAndNamespaces());
+        displayResult3('result-modules', output);
     });
     buttons.btnAsyncTypes?.addEventListener('click', async () => {
-        const output = await captureAsyncConsoleOutput(() => demonstrateAsyncTypes());
-        displayResult('result-async-types', output);
+        const output = await new Promise((resolve) => {
+            const originalLog = console.log;
+            let output = '';
+            console.log = (...args) => {
+                output += args.join(' ') + '\n';
+                originalLog.apply(console, args);
+            };
+            demonstrateAsyncTypes().then(() => {
+                console.log = originalLog;
+                resolve(output);
+            });
+        });
+        displayResult3('result-async-types', output);
     });
     buttons.btnPatterns?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateDesignPatterns());
-        displayResult('result-patterns', output);
+        const output = captureConsoleOutput3(() => demonstrateDesignPatterns());
+        displayResult3('result-patterns', output);
     });
     buttons.btnChallenges?.addEventListener('click', () => {
-        const output = captureConsoleOutput(() => demonstrateTypeChallenges());
-        displayResult('result-challenges', output);
+        const output = captureConsoleOutput3(() => demonstrateTypeChallenges());
+        displayResult3('result-challenges', output);
     });
 });
 //# sourceMappingURL=basic3.js.map
