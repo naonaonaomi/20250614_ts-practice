@@ -1,4 +1,3 @@
-"use strict";
 /**
  * TypeScript基礎編のサンプルコード
  * 基本的な型、関数、オブジェクトの使用方法を学習
@@ -224,37 +223,7 @@ function demonstrateTypeAnnotationVsInference() {
 // ===================================
 // DOM操作・イベント処理セクション
 // ===================================
-/**
- * 結果をHTMLページに表示するヘルパー関数
- */
-function displayResult1(resultId, content) {
-    const resultDiv = document.getElementById(resultId);
-    if (resultDiv) {
-        resultDiv.innerHTML = `<div>${content}</div>`;
-        resultDiv.style.padding = '10px';
-        resultDiv.style.marginTop = '10px';
-        resultDiv.style.whiteSpace = 'pre-wrap';
-        resultDiv.style.fontFamily = 'monospace';
-    }
-}
-/**
- * コンソールログをキャプチャして文字列として返すヘルパー関数
- */
-function captureConsoleOutput1(fn) {
-    const originalLog = console.log;
-    let output = '';
-    console.log = (...args) => {
-        output += args.join(' ') + '\n';
-        originalLog.apply(console, args);
-    };
-    try {
-        fn();
-    }
-    finally {
-        console.log = originalLog;
-    }
-    return output;
-}
+import { displayResult, captureConsoleOutput } from './utils.js';
 /**
  * DOMが読み込まれた後にイベントリスナーを設定
  */
@@ -272,36 +241,36 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     // 各ボタンのイベントリスナー設定
     buttons.btn1?.addEventListener('click', () => {
-        const output = captureConsoleOutput1(() => demonstrateBasicTypes());
-        displayResult1('result1', output);
+        const output = captureConsoleOutput(() => demonstrateBasicTypes());
+        displayResult('result1', output);
     });
     buttons.btn2?.addEventListener('click', () => {
-        const output = captureConsoleOutput1(() => demonstrateObjectTypes());
-        displayResult1('result2', output);
+        const output = captureConsoleOutput(() => demonstrateObjectTypes());
+        displayResult('result2', output);
     });
     buttons.btn3?.addEventListener('click', () => {
-        const output = captureConsoleOutput1(() => demonstrateFunctionTypes());
-        displayResult1('result3', output);
+        const output = captureConsoleOutput(() => demonstrateFunctionTypes());
+        displayResult('result3', output);
     });
     buttons.btn4?.addEventListener('click', () => {
-        const output = captureConsoleOutput1(() => demonstrateUnionTypes());
-        displayResult1('result4', output);
+        const output = captureConsoleOutput(() => demonstrateUnionTypes());
+        displayResult('result4', output);
     });
     buttons.btn5?.addEventListener('click', () => {
-        const output = captureConsoleOutput1(() => demonstrateTypeAliases());
-        displayResult1('result5', output);
+        const output = captureConsoleOutput(() => demonstrateTypeAliases());
+        displayResult('result5', output);
     });
     buttons.btn6?.addEventListener('click', () => {
-        const output = captureConsoleOutput1(() => demonstrateArraysAndTuples());
-        displayResult1('result6', output);
+        const output = captureConsoleOutput(() => demonstrateArraysAndTuples());
+        displayResult('result6', output);
     });
     buttons.btn7?.addEventListener('click', () => {
-        const output = captureConsoleOutput1(() => demonstrateSpecialTypes());
-        displayResult1('result7', output);
+        const output = captureConsoleOutput(() => demonstrateSpecialTypes());
+        displayResult('result7', output);
     });
     buttons.btn8?.addEventListener('click', () => {
-        const output = captureConsoleOutput1(() => demonstrateTypeAnnotationVsInference());
-        displayResult1('result8', output);
+        const output = captureConsoleOutput(() => demonstrateTypeAnnotationVsInference());
+        displayResult('result8', output);
     });
 });
 //# sourceMappingURL=basic1.js.map
