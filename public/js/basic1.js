@@ -10,7 +10,6 @@
  * 基本的なプリミティブ型の使用例を示す
  */
 function demonstrateBasicTypes() {
-    console.log("=== 基本的な型のデモンストレーション ===");
     // 数値型
     let age = 25;
     console.log("年齢:", age);
@@ -34,7 +33,6 @@ function demonstrateBasicTypes() {
  * オブジェクト型とオプショナルプロパティの使用例を示す
  */
 function demonstrateObjectTypes() {
-    console.log("=== オブジェクト型のデモンストレーション ===");
     // オブジェクト型の定義（インライン型）
     let person = {
         name: "佐藤花子",
@@ -59,7 +57,6 @@ function demonstrateObjectTypes() {
  * 関数の型注釈とオプション引数の使用例を示す
  */
 function demonstrateFunctionTypes() {
-    console.log("=== 関数の型のデモンストレーション ===");
     // 関数の型注釈
     function add(x, y) {
         return x + y;
@@ -85,7 +82,6 @@ function demonstrateFunctionTypes() {
  * Union型（複数の型の組み合わせ）の使用例を示す
  */
 function demonstrateUnionTypes() {
-    console.log("=== Union型のデモンストレーション ===");
     // Union型（複数の型のいずれか）
     let id;
     id = 123;
@@ -111,20 +107,19 @@ function demonstrateUnionTypes() {
  * 型エイリアスを使った型の再利用例を示す
  */
 function demonstrateTypeAliases() {
-    console.log("=== 型エイリアスのデモンストレーション ===");
     // 型エイリアスの使用
     let currentUser = {
         id: 1,
         name: "鈴木一郎",
         status: "pending"
     };
-    console.log("ユーザー:", currentUser);
+    console.log("ユーザー:", JSON.stringify(currentUser, null, 2));
     // 型安全な関数
     function updateStatus(user, newStatus) {
         return { ...user, status: newStatus };
     }
     let updatedUser = updateStatus(currentUser, "completed");
-    console.log("更新後:", updatedUser);
+    console.log("更新後:", JSON.stringify(updatedUser, null, 2));
 }
 // ===================================
 // セクション6: 配列とタプル
@@ -133,7 +128,6 @@ function demonstrateTypeAliases() {
  * 配列型とタプル型の使用例を示す
  */
 function demonstrateArraysAndTuples() {
-    console.log("=== 配列とタプルのデモンストレーション ===");
     // 配列型
     let numbers = [1, 2, 3, 4, 5];
     console.log("数値配列:", numbers);
@@ -156,7 +150,6 @@ function demonstrateArraysAndTuples() {
  * TypeScriptの特殊な型（never, any, unknown）の使用例を示す
  */
 function demonstrateSpecialTypes() {
-    console.log("=== 特殊な型のデモンストレーション ===");
     // any型（型チェックを無効にする）
     let anyValue = 42;
     anyValue = "文字列";
@@ -195,7 +188,6 @@ function demonstrateSpecialTypes() {
  * 型注釈と型推論の違いと使い分けを示す
  */
 function demonstrateTypeAnnotationVsInference() {
-    console.log("=== 型注釈と型推論のデモンストレーション ===");
     // 型推論（TypeScriptが自動で型を決定）
     let inferredString = "これは文字列"; // string型として推論
     let inferredNumber = 42; // number型として推論

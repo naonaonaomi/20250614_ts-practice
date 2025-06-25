@@ -76,8 +76,6 @@ type StringifiedUser = {
  * Interfaceの基本的な使用例を示す
  */
 function demonstrateInterface(): void {
-    console.log("=== Interface のデモンストレーション ===");
-    
     // インターフェースを使用
     const user1: BasicUser = {
         id: 1,
@@ -105,8 +103,6 @@ function demonstrateInterface(): void {
  * メソッドを持つInterfaceの使用例を示す
  */
 function demonstrateInterfaceWithMethods(): void {
-    console.log("=== メソッドを持つInterface のデモンストレーション ===");
-    
     // インターフェースを実装
     const calculator: Calculator = {
         add: (a, b) => {
@@ -158,8 +154,6 @@ class Animal {
  * Classの基本的な使用例を示す
  */
 function demonstrateClass(): void {
-    console.log("=== Class のデモンストレーション ===");
-    
     // インスタンス作成
     const dog = new Animal("ポチ", "犬", 3);
     const cat = new Animal("ミケ", "猫", 2);
@@ -211,8 +205,6 @@ class Car extends Vehicle {
  * クラスの継承の使用例を示す
  */
 function demonstrateInheritance(): void {
-    console.log("=== クラスの継承 のデモンストレーション ===");
-    
     const car = new Car("トヨタ", "プリウス", 4);
     car.start();
     car.drive();
@@ -252,7 +244,7 @@ class Duck implements Flyable, Swimmable {
  * InterfaceとClassの組み合わせの使用例を示す
  */
 function demonstrateInterfaceAndClass(): void {
-    console.log("=== InterfaceとClass の組み合わせデモンストレーション ===");
+
     
     const duck = new Duck("アヒル");
     duck.walk();
@@ -274,7 +266,7 @@ function identity<T>(arg: T): T {
  * Genericsの基本的な使用例を示す
  */
 function demonstrateGenerics(): void {
-    console.log("=== Generics基礎 のデモンストレーション ===");
+
     
     // 使用例
     const numberResult = identity<number>(42);
@@ -320,7 +312,7 @@ class Box<T> {
  * ジェネリッククラスの使用例を示す
  */
 function demonstrateGenericClass(): void {
-    console.log("=== ジェネリッククラス のデモンストレーション ===");
+
     
     // 異なる型のBox作成
     const numberBox = new Box<number>(123);
@@ -353,7 +345,7 @@ function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
  * ジェネリック制約の使用例を示す
  */
 function demonstrateGenericConstraints(): void {
-    console.log("=== ジェネリック制約 のデモンストレーション ===");
+
     
     // length プロパティを持つオブジェクトのみ受け入れる
     logLength("文字列です");
@@ -376,7 +368,7 @@ function demonstrateGenericConstraints(): void {
  * TypeScriptのユーティリティ型の使用例を示す
  */
 function demonstrateUtilityTypes(): void {
-    console.log("=== ユーティリティ型 のデモンストレーション ===");
+
     
     // Partial<T> - すべてのプロパティをオプショナルに
     const updateUser: Partial<OriginalUser> = {
@@ -408,7 +400,7 @@ function demonstrateUtilityTypes(): void {
  * Mapped Typesの使用例を示す
  */
 function demonstrateMappedTypes(): void {
-    console.log("=== Mapped Types のデモンストレーション ===");
+
     
     // 使用例
     const user: BaseUser = {

@@ -10,7 +10,6 @@
  * Interfaceの基本的な使用例を示す
  */
 function demonstrateInterface() {
-    console.log("=== Interface のデモンストレーション ===");
     // インターフェースを使用
     const user1 = {
         id: 1,
@@ -34,7 +33,6 @@ function demonstrateInterface() {
  * メソッドを持つInterfaceの使用例を示す
  */
 function demonstrateInterfaceWithMethods() {
-    console.log("=== メソッドを持つInterface のデモンストレーション ===");
     // インターフェースを実装
     const calculator = {
         add: (a, b) => {
@@ -76,7 +74,6 @@ class Animal {
  * Classの基本的な使用例を示す
  */
 function demonstrateClass() {
-    console.log("=== Class のデモンストレーション ===");
     // インスタンス作成
     const dog = new Animal("ポチ", "犬", 3);
     const cat = new Animal("ミケ", "猫", 2);
@@ -114,7 +111,6 @@ class Car extends Vehicle {
  * クラスの継承の使用例を示す
  */
 function demonstrateInheritance() {
-    console.log("=== クラスの継承 のデモンストレーション ===");
     const car = new Car("トヨタ", "プリウス", 4);
     car.start();
     car.drive();
@@ -146,7 +142,6 @@ class Duck {
  * InterfaceとClassの組み合わせの使用例を示す
  */
 function demonstrateInterfaceAndClass() {
-    console.log("=== InterfaceとClass の組み合わせデモンストレーション ===");
     const duck = new Duck("アヒル");
     duck.walk();
     duck.fly();
@@ -164,7 +159,6 @@ function identity(arg) {
  * Genericsの基本的な使用例を示す
  */
 function demonstrateGenerics() {
-    console.log("=== Generics基礎 のデモンストレーション ===");
     // 使用例
     const numberResult = identity(42);
     const stringResult = identity("こんにちは");
@@ -199,7 +193,6 @@ class Box {
  * ジェネリッククラスの使用例を示す
  */
 function demonstrateGenericClass() {
-    console.log("=== ジェネリッククラス のデモンストレーション ===");
     // 異なる型のBox作成
     const numberBox = new Box(123);
     const stringBox = new Box("テキスト");
@@ -225,7 +218,6 @@ function getProperty(obj, key) {
  * ジェネリック制約の使用例を示す
  */
 function demonstrateGenericConstraints() {
-    console.log("=== ジェネリック制約 のデモンストレーション ===");
     // length プロパティを持つオブジェクトのみ受け入れる
     logLength("文字列です");
     logLength([1, 2, 3, 4]);
@@ -244,7 +236,6 @@ function demonstrateGenericConstraints() {
  * TypeScriptのユーティリティ型の使用例を示す
  */
 function demonstrateUtilityTypes() {
-    console.log("=== ユーティリティ型 のデモンストレーション ===");
     // Partial<T> - すべてのプロパティをオプショナルに
     const updateUser = {
         name: "更新された名前" // 一部のプロパティのみ
@@ -271,7 +262,6 @@ function demonstrateUtilityTypes() {
  * Mapped Typesの使用例を示す
  */
 function demonstrateMappedTypes() {
-    console.log("=== Mapped Types のデモンストレーション ===");
     // 使用例
     const user = {
         name: "田中太郎",

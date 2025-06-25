@@ -131,7 +131,7 @@ function checkType<T>(value: T): IsString<T> {
  * Conditional Typesの使用例を示す
  */
 function demonstrateConditionalTypes(): void {
-    console.log("=== Conditional Types のデモンストレーション ===");
+
 
     // 実行時の動作例
     const stringResult = checkType("hello");
@@ -161,7 +161,7 @@ function makeAPICall(endpoint: APICall): void {
  * Template Literal Typesの使用例を示す
  */
 function demonstrateTemplateLiteralTypes(): void {
-    console.log("=== Template Literal Types のデモンストレーション ===");
+
     
     // 型安全なAPI呼び出し例
     makeAPICall("GET /api/users");
@@ -193,7 +193,7 @@ function getStringProperties<T extends object>(obj: T): (keyof T)[] {
  * 高度なMapped Typesの使用例を示す
  */
 function demonstrateAdvancedMappedTypes(): void {
-    console.log("=== 高度なMapped Types のデモンストレーション ===");
+
     
     // 実用例の実装
     const user: User = {
@@ -231,7 +231,7 @@ function handleAsyncState(state: AsyncState): string {
  * Discriminated Unionsの使用例を示す
  */
 function demonstrateDiscriminatedUnions(): void {
-    console.log("=== Discriminated Unions のデモンストレーション ===");
+
     
     // 実用例
     const states: AsyncState[] = [
@@ -281,7 +281,7 @@ function makeSound2(animal: PetAnimal): void {
  * Type Guardsの使用例を示す
  */
 function demonstrateTypeGuards(): void {
-    console.log("=== Type Guards のデモンストレーション ===");
+
     
     // 動物の実装
     const dog: Dog = {
@@ -329,7 +329,7 @@ function withTiming<T extends (...args: any[]) => any>(fn: T): T {
  * Decoratorsの使用例を示す
  */
 function demonstrateDecorators(): void {
-    console.log("=== Decorators のデモンストレーション ===");
+
     
     const add = (a: number, b: number): number => a + b;
     const multiply = (a: number, b: number): number => a * b;
@@ -392,7 +392,7 @@ namespace StringUtils {
  * Modules and Namespacesの使用例を示す
  */
 function demonstrateModulesAndNamespaces(): void {
-    console.log("=== Modules and Namespaces のデモンストレーション ===");
+
     
     // 名前空間の使用
     console.log("5 + 3 =", MathUtils.add(5, 3));
@@ -436,7 +436,7 @@ async function fetchUser(id: number): Promise<ApiResponse<UserData>> {
  * 非同期処理とPromise型の使用例を示す
  */
 async function demonstrateAsyncTypes(): Promise<void> {
-    console.log("=== 非同期処理とPromise型 のデモンストレーション ===");
+
     
     try {
         console.log("ユーザー取得開始...");
@@ -511,7 +511,7 @@ class UserFactory {
  * デザインパターンの使用例を示す
  */
 function demonstrateDesignPatterns(): void {
-    console.log("=== デザインパターン のデモンストレーション ===");
+
     
     // Builderパターン
     const user1 = new UserBuilder()
@@ -541,7 +541,7 @@ function getNestedProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
  * TypeScript型チャレンジの使用例を示す
  */
 function demonstrateTypeChallenges(): void {
-    console.log("=== TypeScript型チャレンジ のデモンストレーション ===");
+
     
     // 実用例
     const nestedUser: NestedUser = {

@@ -13,7 +13,6 @@ function checkType(value) {
  * Conditional Typesの使用例を示す
  */
 function demonstrateConditionalTypes() {
-    console.log("=== Conditional Types のデモンストレーション ===");
     // 実行時の動作例
     const stringResult = checkType("hello");
     console.log("文字列の場合:", stringResult);
@@ -36,7 +35,6 @@ function makeAPICall(endpoint) {
  * Template Literal Typesの使用例を示す
  */
 function demonstrateTemplateLiteralTypes() {
-    console.log("=== Template Literal Types のデモンストレーション ===");
     // 型安全なAPI呼び出し例
     makeAPICall("GET /api/users");
     makeAPICall("POST /api/users");
@@ -60,7 +58,6 @@ function getStringProperties(obj) {
  * 高度なMapped Typesの使用例を示す
  */
 function demonstrateAdvancedMappedTypes() {
-    console.log("=== 高度なMapped Types のデモンストレーション ===");
     // 実用例の実装
     const user = {
         id: 1,
@@ -93,7 +90,6 @@ function handleAsyncState(state) {
  * Discriminated Unionsの使用例を示す
  */
 function demonstrateDiscriminatedUnions() {
-    console.log("=== Discriminated Unions のデモンストレーション ===");
     // 実用例
     const states = [
         { status: "loading", progress: 50 },
@@ -137,7 +133,6 @@ function makeSound2(animal) {
  * Type Guardsの使用例を示す
  */
 function demonstrateTypeGuards() {
-    console.log("=== Type Guards のデモンストレーション ===");
     // 動物の実装
     const dog = {
         type: "dog",
@@ -177,7 +172,6 @@ function withTiming(fn) {
  * Decoratorsの使用例を示す
  */
 function demonstrateDecorators() {
-    console.log("=== Decorators のデモンストレーション ===");
     const add = (a, b) => a + b;
     const multiply = (a, b) => a * b;
     // デコレータを適用
@@ -231,7 +225,6 @@ var StringUtils;
  * Modules and Namespacesの使用例を示す
  */
 function demonstrateModulesAndNamespaces() {
-    console.log("=== Modules and Namespaces のデモンストレーション ===");
     // 名前空間の使用
     console.log("5 + 3 =", MathUtils.add(5, 3));
     console.log("4 × 7 =", MathUtils.multiply(4, 7));
@@ -271,7 +264,6 @@ async function fetchUser(id) {
  * 非同期処理とPromise型の使用例を示す
  */
 async function demonstrateAsyncTypes() {
-    console.log("=== 非同期処理とPromise型 のデモンストレーション ===");
     try {
         console.log("ユーザー取得開始...");
         const result1 = await fetchUser(1);
@@ -339,7 +331,6 @@ class UserFactory {
  * デザインパターンの使用例を示す
  */
 function demonstrateDesignPatterns() {
-    console.log("=== デザインパターン のデモンストレーション ===");
     // Builderパターン
     const user1 = new UserBuilder()
         .setId(1)
@@ -363,7 +354,6 @@ function getNestedProperty(obj, key) {
  * TypeScript型チャレンジの使用例を示す
  */
 function demonstrateTypeChallenges() {
-    console.log("=== TypeScript型チャレンジ のデモンストレーション ===");
     // 実用例
     const nestedUser = {
         id: 1,

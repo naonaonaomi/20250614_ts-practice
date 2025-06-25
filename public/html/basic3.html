@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TypeScript練習【上級編】</title>
+  <link rel="icon" type="image/jpeg" href="../img/danceCat.jpg">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -16,8 +17,7 @@
     <section id="conditional-types">
       <h2>1. Conditional Types（条件付き型）</h2>
       <p>型の条件分岐を使った高度な型操作を学びます。</p>
-      <pre><code>// 条件付き型（T extends U ? X : Y）
-type IsString&lt;T&gt; = T extends string ? "文字列です" : "文字列ではありません";
+      <pre><code>type IsString&lt;T&gt; = T extends string ? "文字列です" : "文字列ではありません";
 type ElementType&lt;T&gt; = T extends (infer U)[] ? U : never;
 
 function checkType&lt;T&gt;(value: T): IsString&lt;T&gt; {
@@ -37,8 +37,7 @@ console.log("配列例:", [1, 2, 3], ["a", "b"]);</code></pre>
     <section id="template-literal">
       <h2>2. Template Literal Types</h2>
       <p>文字列テンプレートを型レベルで操作する方法を学びます。</p>
-      <pre><code>// テンプレートリテラル型（文字列テンプレートを型レベルで操作）
-type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
+      <pre><code>type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
 type APICall = `${HTTPMethod} /api/${string}`;
 type CSSProperty = `${"margin" | "padding"}-${"top" | "left"}`;
 
@@ -58,13 +57,10 @@ console.log("CSS プロパティ例:", cssProperties);</code></pre>
     <section id="mapped-advanced">
       <h2>3. 高度なMapped Types</h2>
       <p>より複雑な型変換パターンを学びます。</p>
-      <pre><code>// 高度なMapped Types（複雑な型変換）
-interface User { id: number; name: string; email: string; isActive: boolean; }
+      <pre><code>interface User { id: number; name: string; email: string; isActive: boolean; }
 
-// 全プロパティをPromise型に変換
 type PromisifiedUser = { [K in keyof User]: Promise&lt;User[K]&gt; };
 
-// 文字列プロパティのみ抽出
 type StringProperties&lt;T&gt; = { [K in keyof T]: T[K] extends string ? K : never }[keyof T];
 
 function getStringProperties&lt;T&gt;(obj: T): (keyof T)[] {
@@ -83,8 +79,7 @@ console.log("文字列プロパティ:", stringProps);</code></pre>
     <section id="discriminated-unions">
       <h2>4. Discriminated Unions（判別可能なユニオン型）</h2>
       <p>型安全な条件分岐を実現する判別可能なユニオン型を学びます。</p>
-      <pre><code>// 判別可能なユニオン型（型安全な状態管理）
-interface LoadingState { status: "loading"; progress: number; }
+      <pre><code>interface LoadingState { status: "loading"; progress: number; }
 interface SuccessState { status: "success"; data: string; }
 interface ErrorState { status: "error"; error: string; }
 
@@ -113,8 +108,7 @@ states.forEach((state, index) => console.log(`状態 ${index + 1}:`, handleAsync
     <section id="type-guards">
       <h2>5. Type Guards（型ガード）</h2>
       <p>実行時に型を安全に絞り込む方法を学びます。</p>
-      <pre><code>// 型ガード（実行時に型を安全に絞り込み）
-interface Dog { type: "dog"; bark(): void; }
+      <pre><code>interface Dog { type: "dog"; bark(): void; }
 interface Cat { type: "cat"; meow(): void; }
 type Animal = Dog | Cat;
 
@@ -140,8 +134,7 @@ makeSound(cat);</code></pre>
     <section id="decorators">
       <h2>6. Decorators（デコレータ）</h2>
       <p>クラスやメソッドに横断的な機能を追加する方法を学びます。</p>
-      <pre><code>// デコレータの概念（高階関数で実装）
-function withLogging&lt;T extends (...args: any[]) => any&gt;(fn: T): T {
+      <pre><code>function withLogging&lt;T extends (...args: any[]) => any&gt;(fn: T): T {
     return ((...args: any[]) => {
         console.log(`関数 ${fn.name} 実行中... 引数:`, args);
         const result = fn(...args);
@@ -172,8 +165,7 @@ timedAdd(10, 20);</code></pre>
     <section id="modules-namespaces">
       <h2>7. Modules と Namespaces</h2>
       <p>コードの組織化とモジュールシステムを学びます。</p>
-      <pre><code>// Namespace（TypeScript独自の機能）
-namespace MathUtils {
+      <pre><code>namespace MathUtils {
     export function add(a: number, b: number): number { return a + b; }
     export const PI = 3.14159;
     
@@ -181,7 +173,6 @@ namespace MathUtils {
     export function getInfo(): string { return `${privateHelper()} PI = ${PI}`; }
 }
 
-// Module パターン
 const StringUtils = (function() {
     let counter = 0;
     return {
@@ -198,110 +189,107 @@ console.log("Module:", StringUtils.capitalize("hello"), "使用回数:", StringU
 
     <section id="async-types">
       <h2>8. 非同期処理の型安全性</h2>
-      <p>Promise、async/awaitでの型安全な非同期処理を学びます。</p>
-      <pre><code>// 型安全な非同期処理
-interface UserData { id: number; name: string; email: string; }
+      <p>Promise、async/awaitとTypeScriptの型システムを組み合わせる方法を学びます。</p>
+      <pre><code>interface UserData { id: number; name: string; email: string; }
 interface ApiResponse&lt;T&gt; { success: boolean; data?: T; error?: string; }
 
-async function fetchUser(id: number): Promise&lt;ApiResponse&lt;UserData&gt;&gt; {
-    try {
-        console.log(`ユーザー ${id} のデータを取得中...`);
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        if (id > 0) {
-            return { success: true, data: { id, name: `ユーザー${id}`, email: `user${id}@example.com` } };
-        } else {
-            return { success: false, error: "無効なユーザーID" };
-        }
-    } catch (error) {
-        return { success: false, error: "サーバーエラー" };
-    }
+function fetchUser(id: number): Promise&lt;ApiResponse&lt;UserData&gt;&gt; {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            if (id > 0) {
+                resolve({ success: true, data: { id, name: `ユーザー${id}`, email: `user${id}@example.com` } });
+            } else {
+                resolve({ success: false, error: "無効なユーザーID" });
+            }
+        }, 1000);
+    });
 }
 
 async function demonstrateAsyncTypes(): Promise&lt;void&gt; {
-    const result = await fetchUser(123);
+    console.log("ユーザー取得開始...");
     
-    if (result.success && result.data) {
-        console.log("取得成功:", `ID: ${result.data.id}, 名前: ${result.data.name}`);
+    const response = await fetchUser(1);
+    if (response.success && response.data) {
+        console.log("取得成功:", response.data);
     } else {
-        console.log("取得失敗:", result.error);
+        console.log("取得失敗:", response.error);
     }
 }
 
 demonstrateAsyncTypes();</code></pre>
-      <button id="btn-async-types">実行してみる</button>
-      <div class="result" id="result-async-types"></div>
+      <button id="btn-async">実行してみる</button>
+      <div class="result" id="result-async"></div>
     </section>
 
-    <section id="real-world">
-      <h2>9. 実践的なTypeScript設計パターン</h2>
-      <p>実際のプロジェクトで使える設計パターンを学びます。</p>
-      <pre><code>// 設計パターン（Builder / Factory）
-interface User { id: number; name: string; email: string; isActive?: boolean; }
-
-class UserBuilder {
-    private user: Partial&lt;User&gt; = {};
-    
-    setId(id: number): UserBuilder { this.user.id = id; return this; }
-    setName(name: string): UserBuilder { this.user.name = name; return this; }
-    setEmail(email: string): UserBuilder { this.user.email = email; return this; }
-    
-    build(): User {
-        if (!this.user.id || !this.user.name || !this.user.email) {
-            throw new Error("必須フィールドが不足");
-        }
-        return { id: this.user.id, name: this.user.name, email: this.user.email, isActive: true };
-    }
-}
-
-class UserFactory {
-    static createAdmin(name: string): User {
-        return new UserBuilder().setId(Date.now()).setName(name).setEmail(`${name.toLowerCase()}@admin.com`).build();
-    }
-}
-
-const user1 = new UserBuilder().setId(1).setName("田中太郎").setEmail("tanaka@example.com").build();
-const admin = UserFactory.createAdmin("管理者");
-
-console.log("ビルダー作成:", user1);
-console.log("ファクトリ作成:", admin);</code></pre>
-      <button id="btn-patterns">実行してみる</button>
-      <div class="result" id="result-patterns"></div>
-    </section>
-
-    <section id="type-challenges">
-      <h2>10. TypeScript型チャレンジ</h2>
-      <p>複雑な型操作の実践的な例を学びます。</p>
-      <pre><code>// 高度な型操作
-type DeepReadonly&lt;T&gt; = { readonly [P in keyof T]: T[P] extends object ? DeepReadonly&lt;T[P]&gt; : T[P] };
+    <section id="recursive-types">
+      <h2>9. 再帰的型とAdvanced Types</h2>
+      <p>再帰的な型定義と高度な型操作を学びます。</p>
+      <pre><code>type DeepReadonly&lt;T&gt; = {
+    readonly [P in keyof T]: T[P] extends object ? DeepReadonly&lt;T[P]&gt; : T[P];
+};
 
 interface NestedUser {
     id: number;
-    profile: { name: string; contact: { email: string; phone: string; }; };
+    profile: {
+        name: string;
+        contact: { email: string; phone: string; };
+    };
     preferences: { theme: string; language: string; };
 }
 
-function getNestedProperty&lt;T, K extends keyof T&gt;(obj: T, key: K): T[K] {
-    return obj[key];
-}
+type IsArray&lt;T&gt; = T extends any[] ? true : false;
 
 const nestedUser: NestedUser = {
     id: 1,
-    profile: { name: "田中太郎", contact: { email: "tanaka@example.com", phone: "090-1234-5678" } },
+    profile: {
+        name: "田中太郎",
+        contact: { email: "tanaka@example.com", phone: "090-1234-5678" }
+    },
     preferences: { theme: "dark", language: "ja" }
 };
 
-console.log("ユーザー:", nestedUser);
-console.log("プロフィール:", getNestedProperty(nestedUser, "profile"));
-console.log("名前:", nestedUser.profile.name);
-console.log("メール:", nestedUser.profile.contact.email);</code></pre>
-      <button id="btn-challenges">実行してみる</button>
-      <div class="result" id="result-challenges"></div>
+const readonlyNestedUser: DeepReadonly&lt;NestedUser&gt; = nestedUser;
+
+console.log("ネストしたユーザー:", nestedUser);
+console.log("読み取り専用:", readonlyNestedUser);
+console.log("配列チェック:", true, false);</code></pre>
+      <button id="btn-recursive">実行してみる</button>
+      <div class="result" id="result-recursive"></div>
     </section>
+
+    <section id="performance-optimization">
+      <h2>10. 型レベルでのパフォーマンス最適化</h2>
+      <p>TypeScriptの型システムを使ったコンパイル時最適化とパフォーマンス向上を学びます。</p>
+      <pre><code>type Brand&lt;T, U&gt; = T & { readonly _brand: U };
+type UserId = Brand&lt;number, "UserId"&gt;;
+type ProductId = Brand&lt;number, "ProductId"&gt;;
+
+function createUserId(id: number): UserId { return id as UserId; }
+function createProductId(id: number): ProductId { return id as ProductId; }
+
+function getUser(id: UserId): string { return `ユーザー${id}`; }
+function getProduct(id: ProductId): string { return `商品${id}`; }
+
+const userId = createUserId(123);
+const productId = createProductId(456);
+
+console.log(getUser(userId));
+console.log(getProduct(productId));
+
+interface Cache&lt;T&gt; { [key: string]: T; }
+const userCache: Cache&lt;string&gt; = {};
+userCache["user1"] = "田中太郎";
+
+console.log("キャッシュ:", userCache);</code></pre>
+      <button id="btn-performance">実行してみる</button>
+      <div class="result" id="result-performance"></div>
+    </section>
+
+    <div style="text-align:center; margin: 2em 0 20px 0;" class="page-navigation">
+        <button onclick="location.href='basic2.html'" style="margin: 0.5em; padding: 1em 1.5em; min-width: 120px;">◀ 応用編へ</button>
+        <button onclick="location.href='../index.html'" style="margin: 0.5em; padding: 1em 1.5em; min-width: 120px;">ホームへ ▶</button>
+    </div>
   </main>
-  <div style="text-align:center; margin: 2em 0 20px 0;" class="page-navigation">
-    <button onclick="location.href='basic2.html'" style="padding: 1.2em 2em; font-size: 1.1em; min-width: 200px;">◀ 応用編へ</button>
-  </div>
   <script src="../js/basic3.js"></script>
 </body>
 </html> 

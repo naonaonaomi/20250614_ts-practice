@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TypeScript練習【応用編】</title>
+  <link rel="icon" type="image/jpeg" href="../img/danceCat.jpg">
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -16,12 +17,11 @@
     <section id="interface-basic">
       <h2>1. Interface（インターフェース）</h2>
       <p>オブジェクトの構造を定義する方法を学びます。</p>
-      <pre><code>// インターフェース定義
-interface User {
+      <pre><code>interface User {
     id: number;
     name: string;
     email: string;
-    isActive?: boolean;  // オプショナル
+    isActive?: boolean;
 }
 
 const user1: User = { id: 1, name: "田中太郎", email: "tanaka@example.com", isActive: true };
@@ -36,8 +36,7 @@ console.log("ユーザー2:", user2);</code></pre>
     <section id="interface-method">
       <h2>2. メソッドを持つInterface</h2>
       <p>インターフェースにメソッドを定義する方法を学びます。</p>
-      <pre><code>// メソッドを持つインターフェース
-interface Calculator {
+      <pre><code>interface Calculator {
     add(a: number, b: number): number;
     multiply(a: number, b: number): number;
 }
@@ -56,8 +55,7 @@ calculator.multiply(6, 7);</code></pre>
     <section id="class-basic">
       <h2>3. Class（クラス）</h2>
       <p>TypeScriptのクラス定義と型安全性を学びます。</p>
-      <pre><code>// クラス定義（アクセス修飾子）
-class Animal {
+      <pre><code>class Animal {
     private name: string;
     protected species: string;
 
@@ -81,8 +79,7 @@ console.log(dog.getInfo());</code></pre>
     <section id="class-inheritance">
       <h2>4. クラスの継承</h2>
       <p>継承とポリモーフィズムを学びます。</p>
-      <pre><code>// 継承（extends）
-class Vehicle {
+      <pre><code>class Vehicle {
     constructor(protected brand: string, protected model: string) {}
     
     getInfo(): string { return `${this.brand} ${this.model}`; }
@@ -91,7 +88,7 @@ class Vehicle {
 
 class Car extends Vehicle {
     constructor(brand: string, model: string, private doors: number) {
-        super(brand, model);  // 親コンストラクタ呼び出し
+        super(brand, model);
     }
     
     getInfo(): string { return `${super.getInfo()}（${this.doors}ドア）`; }
@@ -108,8 +105,7 @@ car.drive();</code></pre>
     <section id="interface-class">
       <h2>5. InterfaceとClassの組み合わせ</h2>
       <p>インターフェースを実装するクラスの作成方法を学びます。</p>
-      <pre><code>// インターフェース実装（implements）
-interface Flyable { fly(): void; altitude: number; }
+      <pre><code>interface Flyable { fly(): void; altitude: number; }
 interface Swimmable { swim(): void; depth: number; }
 
 class Duck implements Flyable, Swimmable {
@@ -139,15 +135,13 @@ duck.swim();</code></pre>
     <section id="generics-basic">
       <h2>6. Generics（ジェネリクス）基礎</h2>
       <p>型パラメータを使って再利用可能なコードを書く方法を学びます。</p>
-      <pre><code>// ジェネリック関数
-// ジェネリック関数（型パラメータ&lt;T&gt;）
-function identity&lt;T&gt;(arg: T): T {
+      <pre><code>function identity&lt;T&gt;(arg: T): T {
     console.log("型:", typeof arg, "値:", arg);
     return arg;
 }
 
 const numberResult = identity&lt;number&gt;(42);
-const stringResult = identity("こんにちは");  // 型推論
+const stringResult = identity("こんにちは");
 
 console.log("数値結果:", numberResult);
 console.log("文字列結果:", stringResult);</code></pre>
@@ -158,8 +152,7 @@ console.log("文字列結果:", stringResult);</code></pre>
     <section id="generics-class">
       <h2>7. ジェネリッククラス</h2>
       <p>型パラメータを持つクラスの作成方法を学びます。</p>
-      <pre><code>// ジェネリッククラス（型パラメータを持つクラス）
-class Box&lt;T&gt; {
+      <pre><code>class Box&lt;T&gt; {
     constructor(private value: T) {
         console.log(`Box作成: ${typeof value}型`);
     }
@@ -169,7 +162,7 @@ class Box&lt;T&gt; {
 }
 
 const numberBox = new Box&lt;number&gt;(42);
-const stringBox = new Box("TypeScript");  // 型推論
+const stringBox = new Box("TypeScript");
 
 console.log("数値Box:", numberBox.getValue());
 console.log("文字列Box:", stringBox.getValue());
@@ -181,21 +174,19 @@ numberBox.setValue(100);</code></pre>
     <section id="generics-constraints">
       <h2>8. ジェネリック制約</h2>
       <p>ジェネリックに制約を設ける方法を学びます。</p>
-      <pre><code>// ジェネリック制約（extends）
-interface Lengthwise { length: number; }
+      <pre><code>interface Lengthwise { length: number; }
 
 function logLength&lt;T extends Lengthwise&gt;(arg: T): T {
     console.log(`長さ: ${arg.length}, 値: ${arg}`);
     return arg;
 }
 
-// keyof演算子で型安全なプロパティアクセス
 function getProperty&lt;T, K extends keyof T&gt;(obj: T, key: K): T[K] {
     return obj[key];
 }
 
-logLength("文字列");      // string.length
-logLength([1, 2, 3]);    // Array.length
+logLength("文字列");
+logLength([1, 2, 3]);
 
 const person = { name: "田中太郎", age: 30 };
 console.log("名前:", getProperty(person, "name"));
@@ -207,16 +198,12 @@ console.log("年齢:", getProperty(person, "age"));</code></pre>
     <section id="utility-types">
       <h2>9. ユーティリティ型</h2>
       <p>TypeScriptの便利な組み込みユーティリティ型を学びます。</p>
-      <pre><code>// ユーティリティ型（組み込み型変換）
-interface User { id: number; name: string; email: string; isActive: boolean; }
+      <pre><code>interface User { id: number; name: string; email: string; isActive: boolean; }
 
-// Partial&lt;T&gt; - 全プロパティをオプショナルに
 const updateUser: Partial&lt;User&gt; = { name: "更新された名前" };
 
-// Pick&lt;T, K&gt; - 特定プロパティのみ抽出
 const summary: Pick&lt;User, "id" | "name"&gt; = { id: 1, name: "田中太郎" };
 
-// Omit&lt;T, K&gt; - 特定プロパティを除外
 const newUser: Omit&lt;User, "id"&gt; = { name: "新規", email: "new@example.com", isActive: true };
 
 console.log("部分更新:", updateUser);
@@ -229,13 +216,10 @@ console.log("新規:", newUser);</code></pre>
     <section id="mapped-types">
       <h2>10. Mapped Types（マップド型）</h2>
       <p>既存の型を変換して新しい型を作る方法を学びます。</p>
-      <pre><code>// Mapped Types（既存の型を変換）
-interface User { name: string; age: number; email: string; }
+      <pre><code>interface User { name: string; age: number; email: string; }
 
-// 全プロパティをreadonly化
 type ReadonlyUser = { readonly [K in keyof User]: User[K] };
 
-// 全プロパティを文字列化
 type StringifiedUser = { [K in keyof User]: string };
 
 const user: User = { name: "田中太郎", age: 30, email: "tanaka@example.com" };
